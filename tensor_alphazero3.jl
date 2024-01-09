@@ -96,7 +96,7 @@ function update_status!(env::GameEnv, action)
     update_actions_mask!(env, action)
     env.finished = !any(env.amask)
 
-    
+    true
 end
   
 function GI.play!(env::GameEnv, action)
@@ -129,7 +129,7 @@ function GI.play!(env::GameEnv, action)
         env.node_dims_arys[contract_bool] .= [contract_dims]
         env.node_bool_arys[contract_bool] .= [contract_bool]
 
-        push!(env.reward_list, flop)
+        push!(env.reward_list, -flop)
     end
    
 end
@@ -140,7 +140,7 @@ end
 
 
   
-GI.current_state(env::GameEnv) = (node_dims_arys = env.node_dims_arys, node_bool_arys = env.node_bool_arys, edges=env.edges, history = env.history, finished =env.finished, amask = env.amask, reward_list = env.reward_list)
+GI.current_state(env::GameEnv) = (node_dims_arys = copy(env.node_dims_arys), node_bool_arys = copy(env.node_bool_arys), edges = copy(env.edges), history = copy(env.history), finished = copy(env.finished), amask = copy(env.amask), reward_list = copy(env.reward_list))
   
 GI.white_playing(env::GameEnv) = true
 
@@ -171,3 +171,34 @@ end
 function GI.vectorize_state(::GameSpec, state)
   return convert(Array{Float32}, cat(stack(state.node_dims_arys, dims=1), stack(state.node_bool_arys, dims=1), dims =3))
 end  
+
+
+
+
+
+
+
+GI.action_string(::GameSpec, a) = string(a)
+
+function GI.parse_action(g::GameSpec, str)
+    try
+      p = parse(Int, str)
+      1 <= p <= 6 ? p : nothing
+    catch
+      nothing
+    end
+  end
+
+function GI.render(env::GameEnv, with_position_names=true, botmargin=true)
+    
+    print("\n BOOL ARRAY: \n")
+    print(env.node_bool_arys)
+    print("\n DIM ARRAY: \n")
+    print(env.node_dims_arys)
+    print("\n AMASK: \n")
+    print(env.amask)
+    print("\n REWARD LIST: \n")
+    print(env.reward_list)
+
+    botmargin && print("\n")
+  end

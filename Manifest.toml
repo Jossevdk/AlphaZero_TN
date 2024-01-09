@@ -32,7 +32,7 @@ weakdeps = ["StaticArrays"]
 
 [[deps.AlphaZero]]
 deps = ["ArgParse", "CUDA", "Colors", "CommonRLInterface", "Crayons", "DataStructures", "Distributed", "Distributions", "Documenter", "ExprTools", "Flux", "Formatting", "JSON3", "Knet", "LinearAlgebra", "LoggingExtras", "Plots", "ProgressMeter", "Random", "Requires", "Serialization", "Setfield", "StaticArrays", "Statistics", "ThreadPools", "Zygote"]
-git-tree-sha1 = "b6dbea94a92daa10a29bd9e62d2c5a5e674aea0b"
+path = "dev/AlphaZero"
 uuid = "8ed9eb0b-7496-408d-8c8b-2119aeea02cd"
 version = "0.5.4"
 

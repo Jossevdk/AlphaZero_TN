@@ -65,7 +65,7 @@
     },
     "num_iters": 1,
     "use_symmetries": false,
-    "ternary_rewards": false,
+    "ternary_outcome": false,
     "mem_buffer_size": {
         "xs": [
             0,
