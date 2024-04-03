@@ -1,24 +1,23 @@
+Network = NetLib.SimpleNet
 
-Network = NetLib.ResNet
+netparams = NetLib.SimpleNetHP(
+  width=100,
+  depth_common=10,
+  use_batch_norm=false,
+  batch_norm_momentum=1.)
 
-netparams = NetLib.ResNetHP(
-  num_filters=25,
-  num_blocks=5,
-  conv_kernel_size=(3, 3),
-  num_policy_head_filters=32,
-  num_value_head_filters=32)
 
   self_play = SelfPlayParams(
     sim=SimParams(
-      num_games=2000,
-      num_workers=20,
-      batch_size=10,
+      num_games=128,
+      num_workers=32,
+      batch_size=16,
       use_gpu=true,
-      reset_every=20,
+      reset_every=10,
       flip_probability=0.,
       alternate_colors=false),
     mcts=MctsParams(
-      num_iters_per_turn=5,
+      num_iters_per_turn=10,
       cpuct=1.0,
       temperature=ConstSchedule(0.),
       dirichlet_noise_ϵ=0.,
@@ -26,11 +25,11 @@ netparams = NetLib.ResNetHP(
   
   arena = ArenaParams(
     sim=SimParams(
-      num_games=64,
-      num_workers=10,
-      batch_size=10,
-      use_gpu=true,
-      reset_every=10,
+      num_games=100,
+      num_workers=32,
+      batch_size=16,
+      use_gpu=false,
+      reset_every=5,
       flip_probability=0,
       alternate_colors=false),
     mcts=MctsParams(
@@ -43,20 +42,20 @@ netparams = NetLib.ResNetHP(
     use_gpu=true,
     use_position_averaging=true,
     samples_weighing_policy=LOG_WEIGHT,
-    batch_size=8,
-    loss_computation_batch_size=8,
+    batch_size=5,
+    loss_computation_batch_size=1,
     optimiser=Adam(lr=2e-3),
     l2_regularization=1e-4,
     nonvalidity_penalty=1.,
-    min_checkpoints_per_epoch=4,
+    min_checkpoints_per_epoch=20,
     max_batches_per_checkpoint=2000,
-    num_checkpoints=2)
+    num_checkpoints=10)
   
   params = Params(
     arena=arena,
     self_play=self_play,
     learning=learning,
-    num_iters=1,
+    num_iters=10,
     ternary_outcome=false,
     use_symmetries=false,
     memory_analysis=nothing,
@@ -86,9 +85,9 @@ netparams = NetLib.ResNetHP(
   
   benchmark_sim = SimParams(
     arena.sim;
-    num_games=100,
-    num_workers=10,
-    batch_size=10,
+    num_games=128,
+    num_workers=32,
+    batch_size=16,
     alternate_colors=false)
   
       

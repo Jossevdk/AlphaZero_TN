@@ -1,25 +1,31 @@
 using AlphaZero
 using StaticArrays
+using SparseArrays
 import AlphaZero.GI
 using Base: @kwdef
+using GeometricFlux
+using GraphSignals
+using Graphs
+import Flux
+using Flux: batch
 
-
-"""
-Setup as GameEnv.
-In this environment the state is a adjecancy matrix. The edges  
-contain the EinExpr struct.
-"""
 
 include("functions.jl")
+
+global S = 0
 
 
 struct GameSpec <: GI.AbstractGameSpec end
 
+"""
+Setup as GameEnv.
+In this environment the state is a adjecancy matrix.
+"""
 mutable struct GameEnv <: GI.AbstractGameEnv
-    edges::Matrix{Int64}
-    node_dims_arys::Vector{Vector{Int64}}
-    node_bool_arys::Vector{Vector{Bool}}
-    reward_list::Array{Int64}
+  edges_ary::Matrix{Int64}
+    node_dims_arys::Matrix{Int64}
+    node_bool_arys::Matrix{Bool}
+    reward::Int64
     amask::BitVector
     finished::Bool
     history :: Union{Nothing, Vector{Int}}
@@ -30,16 +36,21 @@ end
 GI.spec(::GameEnv) = GameSpec()
 
 function GI.init(::GameSpec)
-    nodes_ary = [2 5 -1; 1 3 5; 2 4 -1; 3 5 -1; 1 2 4;;; 4 4 -1; 4 4 4; 4 4 -1; 4 4 -1; 4 4 4]
-  
-    edges = get_edges_ary(nodes_ary)
-    node_bool_arys = get_node_bool_arys(nodes_ary)
-    node_dims_arys = get_node_dims_arys(nodes_ary)  
+  #nodes_ary = [2 8 9 10; 1 3 5 6; 2 7 10 -1; 5 6 -1 -1; 2 4 -1 -1; 2 4 8 -1; 3 -1 -1 -1; 1 6 10 -1; 1 -1 -1 -1; 1 3 8 -1;;; 9 7 6 5; 9 5 4 4; 5 11 9 -1; 9 9 -1 -1; 4 9 -1 -1; 4 9 6 -1; 11 -1 -1 -1; 7 6 7 -1; 6 -1 -1 -1; 5 9 7 -1]
+    #nodes_ary = [2 5 -1; 1 3 5; 2 4 -1; 3 5 -1; 1 2 44 4 -1; 4 4 4; 4 4 -1; 4 4 -1; 4 4 4]
+    con_ary = [2 5 -1; 1 3 5; 2 4 -1; 3 5 -1; 1 2 4]
+    e_weight = [4 4 -1; 4 4 4; 4 4 -1; 4 4 -1; 4 4 4]
+    #nodes_ary = [2 5 -1; 1 3 9; 2 7 -1; 5 8 -1; 1 4 6; 5 7 -1; 3 6 8; 4 7 9; 2 8 -1;;; 4 4 -1; 4 4 4; 4 4 -1; 4 4 -1; 4 4 4; 4 4 -1; 4 4 4; 4 4 4; 4 4 -1]
+    #nodes_ary = [2 5 3; 1 9 -1; 7 1 -1; 5 8 -1; 1 4 6; 5 7 -1; 3 6 8; 4 7 9; 2 8 -1;;; 4 4 4; 4 4 -1; 4 4 -1; 4 4 -1; 4 4 4; 4 4 -1; 4 4 4; 4 4 4; 4 4 -1]
+    #nodes_ary = [5 13 14 -1 -1 -1 -1 -1; 3 4 7 12 15 18 -1 -1; 2 7 11 -1 -1 -1 -1 -1; 2 7 10 14 15 -1 -1 -1; 1 7 8 11 12 17 20 -1; 8 12 13 -1 -1 -1 -1 -1; 2 3 4 5 10 16 17 18; 5 6 12 -1 -1 -1 -1 -1; 11 14 -1 -1 -1 -1 -1 -1; 4 7 19 -1 -1 -1 -1 -1; 3 5 9 12 15 17 18 -1; 2 5 6 8 11 14 17 -1; 1 6 19 20 -1 -1 -1 -1; 1 4 9 12 15 16 -1 -1; 2 4 11 14 16 -1 -1 -1; 7 14 15 20 -1 -1 -1 -1; 5 7 11 12 18 -1 -1 -1; 2 7 11 17 -1 -1 -1 -1; 10 13 20 -1 -1 -1 -1 -1; 5 13 16 19 -1 -1 -1 -1;;; 2 2 2 -1 -1 -1 -1 -1; 2 2 2 2 2 2 -1 -1; 2 2 2 -1 -1 -1 -1 -1; 2 2 2 2 2 -1 -1 -1; 2 2 2 2 2 2 2 -1; 2 2 2 -1 -1 -1 -1 -1; 2 2 2 2 2 2 2 2; 2 2 2 -1 -1 -1 -1 -1; 2 2 -1 -1 -1 -1 -1 -1; 2 2 2 -1 -1 -1 -1 -1; 2 2 2 2 2 2 2 -1; 2 2 2 2 2 2 2 -1; 2 2 2 2 -1 -1 -1 -1; 2 2 2 2 2 2 -1 -1; 2 2 2 2 2 -1 -1 -1; 2 2 2 2 -1 -1 -1 -1; 2 2 2 2 2 -1 -1 -1; 2 2 2 2 -1 -1 -1 -1; 2 2 2 -1 -1 -1 -1 -1; 2 2 2 2 -1 -1 -1 -1]
+    node_dims_arys =get_node_dims_arys(con_ary, e_weight)
+    node_bool_arys =get_node_bool_arys(con_ary)
+    edges_ary = get_edges_ary(con_ary)
+    global S = maximum(edges_ary)
+ 
     history = Int[]
-
-    board =  cat(node_dims_arys, node_bool_arys, dims=3)
     
-    return GameEnv(edges, node_dims_arys, node_bool_arys,  Int64[], trues(maximum(edges)), false, history)
+    return GameEnv(edges_ary, node_dims_arys, node_bool_arys,  0, trues(maximum(edges_ary)), false, history)
 
 end
 
@@ -54,12 +65,12 @@ end
 #  end
 function GI.set_state!(env::GameEnv, state)
     #print("\n \n set state \n \n")
-    env.edges = state.edges
+    env.edges_ary = state.edges_ary
     env.history = state.history
     env.node_dims_arys= state.node_dims_arys
     env.node_bool_arys = state.node_bool_arys
     env.finished = state.finished
-    env.reward_list = state.reward_list
+    env.reward = state.reward
     env.amask = state.amask
     return
 end
@@ -67,13 +78,14 @@ end
 function GI.clone(env::GameEnv)
     #print("\n \n CLONED \n \n")
     history = isnothing(env.history) ? nothing : copy(env.history)
-    return GameEnv(copy(env.edges), copy(env.node_dims_arys), copy(env.node_bool_arys), copy(env.reward_list), copy(env.amask), env.finished, history)
+    return GameEnv(copy(env.edges_ary), copy(env.node_dims_arys), copy(env.node_bool_arys), copy(env.reward), copy(env.amask), copy(env.finished), history)
 end
 
 GI.two_players(::GameSpec) = false
  
 
-GI.actions(::GameSpec) = collect(1:6)
+GI.actions(::GameSpec) = collect(1:S)
+GI.hasgraph(::GameSpec) = false
 
 
 
@@ -98,40 +110,64 @@ function update_status!(env::GameEnv, action)
 
     true
 end
+function get_flop(env::GameEnv, action)
+  node_i0, node_i1 = first.(Tuple.(findall( x -> x == action, env.edges_ary)))
   
-function GI.play!(env::GameEnv, action)
-    isnothing(env.history) || push!(env.history, action)
-
-    update_status!(env, action)
+  n0_B = env.node_bool_arys[node_i0,:]
+  n1_B = env.node_bool_arys[node_i1,:]
+  #n0 = node_dims_arys[node_i0,:]
+  #n1 = node_dims_arys[node_i1,:]
+  n0 = reduce(+, [env.node_dims_arys[i,:] for i in findall(n0_B)])
+  n1 = reduce(+, [env.node_dims_arys[i,:] for i in findall(n1_B)])
   
-
-    node_i0, node_i1 = first.(Tuple.(findall( x -> x == action, env.edges)))
-
-    n0 = env.node_dims_arys[node_i0]
-    n1 = env.node_dims_arys[node_i1]
-
-    n0_B = env.node_bool_arys[node_i0]
-    n1_B = env.node_bool_arys[node_i1]
-
-    if_diff = !(n0_B[node_i1])
-    if if_diff
-        
-        contract_dims = n0 .+ n1
-        contract_dims[n0.*n1 .!= 0 ] .=n0[n0.*n1 .!= 0 ] .* n1[n0.*n1 .!= 0 ]
-        
-        contract_bool = n0_B .| n1_B
-
-        flop = prod(filter(x -> x != 0, n0[.!contract_bool]))*prod(filter(x -> x != 0, n1[.!contract_bool]))*prod(filter(x -> x != 0, n0[contract_bool]))
-        
-        
-        contract_dims[contract_bool] .= 0  
-        
-        env.node_dims_arys[contract_bool] .= [contract_dims]
-        env.node_bool_arys[contract_bool] .= [contract_bool]
-
-        push!(env.reward_list, -flop)
-    end
+  if_diff = !(n0_B[node_i1])
+  if !if_diff
+    return 0, nothing, nothing,  node_i1, if_diff
+  end
+  if if_diff
+      
+    contract_dims = n0 .+ n1
+    contract_dims[n0.*n1 .!= 0 ] .=n0[n0.*n1 .!= 0 ] .* n1[n0.*n1 .!= 0 ]
+    
+    contract_bool = n0_B .| n1_B
+    
+    #flop = 1*prod(filter(x -> x != 0, n0[.!contract_bool]))*prod(filter(x -> x != 0, n1[.!contract_bool]))*prod(filter(x -> x != 0, n0[contract_bool]))
    
+    flop = 1*prod(filter(x -> x != 0, n0[.!contract_bool]), init=1)*prod(filter(x -> x != 0, n1[.!contract_bool]), init=1)*prod(filter(x -> x != 0, n0[n1_B]), init=1)
+  end
+  return flop, contract_dims, contract_bool, node_i1, if_diff
+end
+
+function update_con(env::GameEnv, contract_dims, contract_bool, node_i1)
+  contract_dims[contract_bool] .= 0 
+
+    
+  foreach(i -> env.node_dims_arys[i, :] .= fill!(similar(contract_dims), 0), findall(contract_bool))
+  foreach(i -> env.node_dims_arys[:, i] .= fill!(similar(contract_dims), 0), findall(contract_bool))
+  
+  env.node_dims_arys[:, node_i1] .= contract_dims
+  env.node_dims_arys[node_i1, :] .= contract_dims
+  #foreach(i -> node_dims_arys[i, :] .= contract_dims, findall(contract_bool))
+  #foreach(j -> node_dims_arys[:, j] .= contract_dims, findall(contract_bool))
+  foreach(i -> env.node_bool_arys[i, :] .= contract_bool, findall(contract_bool))
+  foreach(j -> env.node_bool_arys[:, j] .= contract_bool, findall(contract_bool))
+
+end
+
+
+
+function GI.play!(env::GameEnv, action)
+  isnothing(env.history) || push!(env.history, action)
+
+  update_status!(env, action)
+
+  flop, contract_dims, contract_bool, node_i1, if_diff = get_flop(env, action)
+  
+  if if_diff
+      
+    update_con(env, contract_dims, contract_bool, node_i1)
+      env.reward = -flop
+  end
 end
 
 
@@ -140,7 +176,7 @@ end
 
 
   
-GI.current_state(env::GameEnv) = (node_dims_arys = copy(env.node_dims_arys), node_bool_arys = copy(env.node_bool_arys), edges = copy(env.edges), history = copy(env.history), finished = copy(env.finished), amask = copy(env.amask), reward_list = copy(env.reward_list))
+GI.current_state(env::GameEnv) = (node_dims_arys = copy(env.node_dims_arys), node_bool_arys = copy(env.node_bool_arys), edges_ary = copy(env.edges_ary), history = copy(env.history), finished = copy(env.finished), amask = copy(env.amask), reward = copy(env.reward))
   
 GI.white_playing(env::GameEnv) = true
 
@@ -162,18 +198,20 @@ end
   
 function GI.white_reward(env::GameEnv)
     #print("white_reward")
-  R = sum(env.reward_list)
+  R = env.reward
   
     return R
 end
 
 
 function GI.vectorize_state(::GameSpec, state)
-  return convert(Array{Float32}, cat(stack(state.node_dims_arys, dims=1), stack(state.node_bool_arys, dims=1), dims =3))
+  return convert(Array{Float32}, cat(state.node_bool_arys, state.node_dims_arys, dims=3))
 end  
 
 
-
+function GI.GetGraph(::GameSpec, state)
+  return nothing
+end
 
 
 
@@ -183,7 +221,7 @@ GI.action_string(::GameSpec, a) = string(a)
 function GI.parse_action(g::GameSpec, str)
     try
       p = parse(Int, str)
-      1 <= p <= 6 ? p : nothing
+      1 <= p <= S ? p : nothing
     catch
       nothing
     end
@@ -198,7 +236,7 @@ function GI.render(env::GameEnv, with_position_names=true, botmargin=true)
     print("\n AMASK: \n")
     print(env.amask)
     print("\n REWARD LIST: \n")
-    print(env.reward_list)
+    print(env.reward)
 
     botmargin && print("\n")
   end
