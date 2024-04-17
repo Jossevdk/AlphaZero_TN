@@ -1,17 +1,39 @@
+import CUDA
+
+function SparseArrays.findnz(S::CUDA.CUSPARSE.CuSparseMatrixCSC) 
+  S2 = CUDA.CUSPARSE.CuSparseMatrixCOO(S)
+  I = S2.rowInd
+  J = S2.colInd
+  V = S2.nzVal
+
+  # To make it compatible with the SparseArrays.jl version
+  idxs = sortperm(J)
+  I = I[idxs]
+  J = J[idxs]
+  V = V[idxs]
+
+  return (I, J, V)
+end
+
 #Edges are ordered when first looping over the list of lists 
 #and then over this list only counted once with taking the upper triangle, 
 #with the index of a column equal to the index of a list in the list of lists
 
 mutable struct BatchFeatureGraph
     fg::FeaturedGraph
-    graph_indicator::Vector{Int64}
-    function BatchFeatureGraph(fg::FeaturedGraph, graph_indicator::Vector{Int64})
+    graph_indicator::Union{Vector{Int64}, CUDA.CuArray}
+    function BatchFeatureGraph(fg::FeaturedGraph, graph_indicator::Union{Vector{Int64}, CUDA.CuArray})
         new(fg, graph_indicator)
     end
 end
 
+function Flux.gpu(bfg::BatchFeatureGraph)
+    return BatchFeatureGraph(Flux.gpu(bfg.fg), Flux.gpu(bfg.graph_indicator))
+end
+
 function Flux.batch(fgs::AbstractVector{<:FeaturedGraph})
-    v_num_nodes = [nv(fg) for fg in fgs]
+
+    v_num_nodes = [GraphSignals.nv(fg) for fg in fgs]
     nodesum = cumsum([0; v_num_nodes])[1:(end - 1)]
     rows = vcat([findnz(fg.graph.S)[1] .+ nodesum[i] for (i, fg) in enumerate(fgs)]...)
     cols = vcat([findnz(fg.graph.S)[2] .+ nodesum[i] for (i, fg) in enumerate(fgs)]...)
@@ -24,14 +46,14 @@ function Flux.batch(fgs::AbstractVector{<:FeaturedGraph})
     #nf = hcat([fg.nf for fg in fgs]...)
 
     function materialize_graph_indicator(fg)
-        ones(Int64, nv(fg))
+        ones(Int64, GraphSignals.ne(fg))
     end
 
-    v_gi = materialize_graph_indicator.(fgs)
+    e_gi = materialize_graph_indicator.(fgs)
     
     graphsum = 0:(length(fgs)-1)
-    v_gi = [ng .+ gi for (ng, gi) in zip(graphsum, v_gi)]
-    graph_indicator = vcat(v_gi...)
+    e_gi = [ng .+ gi for (ng, gi) in zip(graphsum, e_gi)]
+    graph_indicator = vcat(e_gi...)
     
 
     return BatchFeatureGraph(FeaturedGraph(S, nf= nf, ef = ef), graph_indicator)
@@ -145,7 +167,7 @@ end
 #with the index of a column equal to the index of a list in the list of lists
 function esizeFromNodesAry(con_ary, e_weigth)
     
-    esize = Int[]
+    esize = Float32[]
     
     for i in axes(con_ary, 1)
         for j in axes(con_ary, 2)
@@ -163,14 +185,14 @@ end
 function adjListToSparseAdjMatrix(adjacency_list)
     rows = Int[]
     cols = Int[]
-    vals = Bool[]
+    vals = Int[]
 
     # Fill the row indices, column indices, and values
     for (i, neighbors) in enumerate(adjacency_list)
         for neighbor in neighbors
             push!(rows, neighbor)
             push!(cols, i)
-            push!(vals, true)  # Using 1 for unweighted graphs
+            push!(vals, 1)  # Using 1 for unweighted graphs
         end
     end
 
@@ -179,13 +201,13 @@ function adjListToSparseAdjMatrix(adjacency_list)
 end
 
 function get_nodes_from_edge(sg, edge)
-    (e, r, _) = collect(edges(sg))
+    (e, r, _) = collect(GraphSignals.edges(sg))
     i, j = findall(x -> x == edge, e)
     return r[i], r[j]
 end
 
 function get_edge_from_nodes(sg, i, j)
-    (e, r, c) = collect(edges(sg))
+    (e, r, c) = collect(GraphSignals.edges(sg))
     j = findfirst(x -> x== (i,j), [(r[i], c[i]) for i in 1:length(r)])
     return e[j]
 end

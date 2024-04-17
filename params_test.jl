@@ -17,27 +17,27 @@ netparams = NetLib.GraphNetHP(
 
   self_play = SelfPlayParams(
     sim=SimParams(
-      num_games=10,
-      num_workers=1,
-      batch_size=1,
-      use_gpu=true,
-      reset_every=2,
+      num_games=50,
+      num_workers=2,
+      batch_size=2,
+      use_gpu=false,
+      reset_every=20,
       flip_probability=0.,
       alternate_colors=false),
     mcts=MctsParams(
-      num_iters_per_turn=3,
+      num_iters_per_turn=10,
       cpuct=1.0,
-      temperature=ConstSchedule(0.),
-      dirichlet_noise_ϵ=0.,
-      dirichlet_noise_α=1.))
+      temperature=PLSchedule([0, 20, 30], [1.0, 1.0, 0.03]),
+      dirichlet_noise_ϵ=0.25,
+      dirichlet_noise_α=0.03))
   
   arena = ArenaParams(
     sim=SimParams(
-      num_games=4,
-      num_workers=1,
-      batch_size=1,
+      num_games=32,
+      num_workers=2,
+      batch_size=2,
       use_gpu=false,
-      reset_every=1,
+      reset_every=10,
       flip_probability=0,
       alternate_colors=false),
     mcts=MctsParams(
@@ -50,20 +50,20 @@ netparams = NetLib.GraphNetHP(
     use_gpu=false,
     use_position_averaging=true,
     samples_weighing_policy=LOG_WEIGHT,
-    batch_size=1,
-    loss_computation_batch_size=1,
+    batch_size=2,
+    loss_computation_batch_size=2,
     optimiser=Adam(lr=2e-3),
     l2_regularization=1e-4,
     nonvalidity_penalty=1.,
     min_checkpoints_per_epoch=1,
-    max_batches_per_checkpoint=2000,
-    num_checkpoints=2)
+    max_batches_per_checkpoint=20,
+    num_checkpoints=3)
   
   params = Params(
     arena=arena,
     self_play=self_play,
     learning=learning,
-    num_iters=1,
+    num_iters=2,
     ternary_outcome=false,
     use_symmetries=false,
     memory_analysis=nothing,
@@ -79,7 +79,7 @@ netparams = NetLib.GraphNetHP(
     Benchmark.MctsRollouts(
       MctsParams(
         arena.mcts,
-        num_iters_per_turn=10,
+        num_iters_per_turn=8,
         cpuct=1.))
   
   minmax_baseline = Benchmark.MinMaxTS(
@@ -93,9 +93,9 @@ netparams = NetLib.GraphNetHP(
   
   benchmark_sim = SimParams(
     arena.sim;
-    num_games=2,
-    num_workers=1,
-    batch_size=1,
+    num_games=20,
+    num_workers=2,
+    batch_size=2,
     alternate_colors=false)
   
       
@@ -107,4 +107,4 @@ benchmark = [
         Benchmark.NetworkOnly(),
         benchmark_sim)]
 
-experiment = AlphaZero.Experiment("TensorContraction", GameSpec(), params, Network, netparams, benchmark)
+experiment = AlphaZero.Experiment("TensorContraction_N8_S20", GameSpec(), params, Network, netparams, benchmark)

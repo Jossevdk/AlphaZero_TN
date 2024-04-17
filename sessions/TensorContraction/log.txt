@@ -3,73 +3,652 @@ Initializing a new AlphaZero environment
 
   Initial report
   
-    Number of network parameters: 32
+    Number of network parameters: 1,233
     Number of regularized network parameters: 4
-    Memory footprint per MCTS node: 2352 bytes
+    Memory footprint per MCTS node: 7792 bytes
   
   Running benchmark: AlphaZero
   
-    Average reward: +2368.00, redundancy: 0.0%
+    Average reward: -470017088.00, redundancy: 0.0%
   
   Running benchmark: Network Only
   
-    Average reward: +4816.00, redundancy: 0.0%
+    Average reward: -234960095.80, redundancy: 0.0%
 
 Starting iteration 1
 
   Starting self-play
   
-    Generating 13 samples per second on average
-    Average exploration depth: 0.7
-    MCTS memory footprint per worker: 47.04kB
-    Experience buffer size: 40 (40 distinct boards)
+    Generating 7 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 420 (420 distinct boards)
   
   Starting learning
   
     Optimizing the loss
     
          Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
-      33442083344207.2   1.0692   0.0002   0.1892  -0.0000   1.0692
-      33442083344207.2   1.0692   0.0001  -0.2711  -0.0000   1.0692
+      1660506166050651   0.9336   0.0003 -15.6119   1.6460   2.5796
+      1660506166050651   0.9336   0.0004 -18.1238   1.6460   2.5796
     
     Launching a checkpoint evaluation
     
-      Average reward: +0.00, redundancy: 0.0%
+      Average reward: -32291241.40, redundancy: 0.0%
     
     Optimizing the loss
     
          Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
-      33442083344207.2   1.0692   0.0001  -0.2711  -0.0000   1.0692
-      33442073344207.2   1.0692   0.0001  -0.6844  -0.0000   1.0692
+      1660506166050651   0.9336   0.0004 -18.1238   1.6460   2.5796
+      1660506166050685   0.9336   0.0005 -19.0319   1.6460   2.5796
     
     Launching a checkpoint evaluation
     
-      Average reward: +0.00, redundancy: 0.0%
+      Average reward: -94059724.00, redundancy: 0.0%
   
   Running benchmark: AlphaZero
   
-    Average reward: +2368.00, redundancy: 0.0%
+    Average reward: -470017088.00, redundancy: 0.0%
   
   Running benchmark: Network Only
   
-    Average reward: +2344.00, redundancy: 0.0%
+    Average reward: -261286063.00, redundancy: 0.0%
+
+Starting iteration 2
+
+  Starting self-play
+  
+    Generating 20 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 840 (840 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660507166050702   0.9336   0.0005 -19.0319   1.6460   2.5796
+      1660507166050702   0.9336   0.0006 -19.3713   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +53247523.40 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660507166050702   0.9336   0.0006 -19.3713   1.6460   2.5796
+      1660506166050668   0.9336   0.0006 -19.4984   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +132876350.80 (network replaced), redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -568827524.80, redundancy: 0.0%
+
+Starting iteration 3
+
+  Starting self-play
+  
+    Generating 20 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 1,260 (1,260 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050685   0.9336   0.0006 -19.4984   1.6460   2.5796
+      1660506166050685   0.9336   0.0006 -19.5463   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -97732953.80, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050685   0.9336   0.0006 -19.5463   1.6460   2.5796
+      1660506166050685   0.9336   0.0007 -19.5607   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -12326071.40, redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -189273626.40, redundancy: 0.0%
+
+Starting iteration 4
+
+  Starting self-play
+  
+    Generating 20 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 1,680 (1,680 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050668   0.9336   0.0007 -19.5607   1.6460   2.5796
+      1660506166050668   0.9336   0.0008 -19.3930   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -16625792.00, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050668   0.9336   0.0008 -19.3930   1.6460   2.5796
+      1660506166050668   0.9336   0.0007 -19.5097   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +156075545.60 (network replaced), redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -151674974.60, redundancy: 0.0%
+
+Starting iteration 5
+
+  Starting self-play
+  
+    Generating 20 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 2,100 (2,100 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050685   0.9336   0.0007 -19.5097   1.6460   2.5796
+      1660506166050685   0.9336   0.0006 -19.5490   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +24063768.60 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050685   0.9336   0.0006 -19.5490   1.6460   2.5796
+      1660506166050685   0.9336   0.0005 -19.5635   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -36145577.20, redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -114389405.00, redundancy: 0.0%
+
+Starting iteration 6
+
+  Starting self-play
+  
+    Generating 20 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 2,520 (2,520 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050668   0.9336   0.0005 -19.5635   1.6460   2.5796
+      1660506166050668   0.9336   0.0005 -19.5687   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -209287025.80, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050668   0.9336   0.0005 -19.5687   1.6460   2.5796
+      1660506166050668   0.9336   0.0005 -19.5704   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +309420282.80 (network replaced), redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -132764587.40, redundancy: 0.0%
+
+Starting iteration 7
+
+  Starting self-play
+  
+    Generating 20 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 2,940 (2,940 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050685   0.9336   0.0005 -19.5704   1.6460   2.5796
+      1660506166050685   0.9336   0.0005 -19.5710   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -98385547.40, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050685   0.9336   0.0005 -19.5710   1.6460   2.5796
+      1660506166050685   0.9336   0.0005 -19.5712   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +62714536.60 (network replaced), redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -340579017.00, redundancy: 0.0%
+
+Starting iteration 8
+
+  Starting self-play
+  
+    Generating 20 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 3,360 (3,360 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050668   0.9336   0.0005 -19.5712   1.6460   2.5796
+      1660506166050668   0.9336   0.0005 -19.5713   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +67257663.20 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050668   0.9336   0.0005 -19.5713   1.6460   2.5796
+      1660506166050668   0.9336   0.0004 -19.5713   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +323601390.00 (network replaced), redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -80907146.80, redundancy: 0.0%
+
+Starting iteration 9
+
+  Starting self-play
+  
+    Generating 20 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 3,780 (3,780 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050651   0.9336   0.0004 -19.5713   1.6460   2.5796
+      1660506166050651   0.9336   0.0003 -19.5713   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -792849218.40, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050651   0.9336   0.0003 -19.5713   1.6460   2.5796
+      1660506166050651   0.9336   0.0002 -19.5713   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +27159585.60 (network replaced), redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -188279832.00, redundancy: 0.0%
+
+Starting iteration 10
+
+  Starting self-play
+  
+    Generating 19 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 4,200 (4,200 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050685   0.9336   0.0002 -19.5713   1.6460   2.5796
+      1660506166050685   0.9336   0.0001 -19.5714   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +104393019.20 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050685   0.9336   0.0001 -19.5714   1.6460   2.5796
+      1660506166050685   0.9336   0.0001 -19.5714   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +519921795.00 (network replaced), redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -268322653.00, redundancy: 0.0%
+
+Starting iteration 11
+
+  Starting self-play
+  
+    Generating 20 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 4,620 (4,620 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050685   0.9336   0.0001 -19.5714   1.6460   2.5796
+      1660506166050685   0.9336   0.0001 -19.5714   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +156908570.20 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050685   0.9336   0.0001 -19.5714   1.6460   2.5796
+      1660506166050685   0.9336   0.0000 -19.5714   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -760826137.80, redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -200734890.20, redundancy: 0.0%
+
+Starting iteration 12
+
+  Starting self-play
+  
+    Generating 20 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 5,040 (5,040 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050668   0.9336   0.0000 -19.5714   1.6460   2.5796
+      1660506166050668   0.9336   0.0000 -19.5714   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +8394630.80 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050668   0.9336   0.0000 -19.5714   1.6460   2.5796
+      1660506166050668   0.9336   0.0000 -19.5714   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +52408178.20 (network replaced), redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -208342977.20, redundancy: 0.0%
+
+Starting iteration 13
+
+  Starting self-play
+  
+    Generating 18 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 5,460 (5,460 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050685   0.9336   0.0000 -19.5714   1.6460   2.5796
+      1660506166050685   0.9336   0.0000 -19.5714   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +123014.40 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050685   0.9336   0.0000 -19.5714   1.6460   2.5796
+      1660506166050685   0.9336   0.0000 -19.5714   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +12918473.20 (network replaced), redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -371735464.00, redundancy: 0.0%
+
+Starting iteration 14
+
+  Starting self-play
+  
+    Generating 20 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 5,880 (5,880 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050685   0.9336   0.0000 -19.5714   1.6460   2.5796
+      1660506166050685   0.9336   0.0000 -19.5714   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +72295350.60 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050685   0.9336   0.0000 -19.5714   1.6460   2.5796
+      1660506166050685   0.9336   0.0000 -19.5714   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +170444.80, redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -223416515.60, redundancy: 0.0%
+
+Starting iteration 15
+
+  Starting self-play
+  
+    Generating 20 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 6,300 (6,300 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050668   0.9336   0.0000 -19.5714   1.6460   2.5796
+      1660506166050668   0.9336   0.0000 -19.5714   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +81678146.60 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050668   0.9336   0.0000 -19.5714   1.6460   2.5796
+      1660506166050668   0.9336   0.0000 -19.5714   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +10330370.40, redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -213765963.20, redundancy: 0.0%
+
+Starting iteration 16
+
+  Starting self-play
+  
+    Generating 20 samples per second on average
+    Average exploration depth: 0.9
+    MCTS memory footprint per worker: 1.64MB
+    Experience buffer size: 6,720 (6,720 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050668   0.9336   0.0000 -19.5714   1.6460   2.5796
+      1660506166050668   0.9336   0.0000 -19.5714   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +50098056.20 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+         Loss       Lv       Lp     Lreg     Linv       Hp    Hpnet
+      1660506166050668   0.9336   0.0000 -19.5714   1.6460   2.5796
+      1660506166050668   0.9336   0.0000 -19.5714   1.6460   2.5796
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -49083577.80, redundancy: 0.0%
+  
+  Running benchmark: AlphaZero
+  
+    Average reward: -470017088.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -96684412.80, redundancy: 0.0%
 
 Training completed
 
 
 Loading environment from: sessions/TensorContraction
 
-Training completed
-
 
 Loading environment from: sessions/TensorContraction
 
-Training completed
-
 
 Loading environment from: sessions/TensorContraction
-
-Training completed
 
 
 Loading environment from: sessions/TensorContraction

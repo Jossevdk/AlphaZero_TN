@@ -1,3 +1,4 @@
+using Revise
 using AlphaZero
 
 #using Distributed
@@ -7,7 +8,7 @@ using AlphaZero
 #@everywhere push!(LOAD_PATH,$"dev")
 #@everywhere using AlphaZero
 
-include("tensor_alphazero3GF.jl")
+include("tensor_alphazero3RTN.jl")
 include("params_test.jl")
 
 #Scripts.test_game(experiment)
