@@ -17,15 +17,15 @@ netparams = NetLib.GraphNetHP(
 
   self_play = SelfPlayParams(
     sim=SimParams(
-      num_games=50,
-      num_workers=2,
-      batch_size=2,
-      use_gpu=false,
-      reset_every=20,
+      num_games=500,
+      num_workers=8,
+      batch_size=8,
+      use_gpu=true,
+      reset_every=32,
       flip_probability=0.,
       alternate_colors=false),
     mcts=MctsParams(
-      num_iters_per_turn=10,
+      num_iters_per_turn=100,
       cpuct=1.0,
       temperature=PLSchedule([0, 20, 30], [1.0, 1.0, 0.03]),
       dirichlet_noise_ϵ=0.25,
@@ -33,11 +33,11 @@ netparams = NetLib.GraphNetHP(
   
   arena = ArenaParams(
     sim=SimParams(
-      num_games=32,
-      num_workers=2,
-      batch_size=2,
-      use_gpu=false,
-      reset_every=10,
+      num_games=128,
+      num_workers=8,
+      batch_size=8,
+      use_gpu=true,
+      reset_every=4,
       flip_probability=0,
       alternate_colors=false),
     mcts=MctsParams(
@@ -50,8 +50,8 @@ netparams = NetLib.GraphNetHP(
     use_gpu=false,
     use_position_averaging=true,
     samples_weighing_policy=LOG_WEIGHT,
-    batch_size=2,
-    loss_computation_batch_size=2,
+    batch_size=1,
+    loss_computation_batch_size=1,
     optimiser=Adam(lr=2e-3),
     l2_regularization=1e-4,
     nonvalidity_penalty=1.,
@@ -93,9 +93,9 @@ netparams = NetLib.GraphNetHP(
   
   benchmark_sim = SimParams(
     arena.sim;
-    num_games=20,
-    num_workers=2,
-    batch_size=2,
+    num_games=64,
+    num_workers=16,
+    batch_size=16,
     alternate_colors=false)
   
       

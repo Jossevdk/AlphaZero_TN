@@ -2,7 +2,7 @@
 
 julia_version = "1.9.4"
 manifest_format = "2.0"
-project_hash = "789bcd664021bb55ff19bb69a846ff8b0da10925"
+project_hash = "29205b9edc7e47a6347085a9f067a126d1834612"
 
 [[deps.ANSIColoredPrinters]]
 git-tree-sha1 = "574baf8110975760d391c710b6341da1afa48d8c"
@@ -1661,6 +1661,12 @@ git-tree-sha1 = "67186a2bc9a90f9f85ff3cc8277868961fb57cbd"
 uuid = "f57f5aa1-a3ce-4bc8-8ab9-96f992907883"
 version = "0.4.3"
 
+[[deps.PackageExtensionCompat]]
+git-tree-sha1 = "fb28e33b8a95c4cee25ce296c817d89cc2e53518"
+uuid = "65ce6f38-6b18-4e1d-a461-8949797d7930"
+version = "1.0.2"
+weakdeps = ["Requires", "TOML"]
+
 [[deps.Packing]]
 deps = ["GeometryBasics"]
 git-tree-sha1 = "ec3edfe723df33528e085e632414499f26650501"
@@ -2067,6 +2073,20 @@ git-tree-sha1 = "66e0a8e672a0bdfca2c3f5937efb8538b9ddc085"
 uuid = "a2af1166-a08f-5f64-846c-94a0d3cef48c"
 version = "1.2.1"
 
+[[deps.SparseArrayKit]]
+deps = ["LinearAlgebra", "PackageExtensionCompat", "TupleTools", "VectorInterface"]
+git-tree-sha1 = "e06f75c460c16b5b08bf93324b7db2cf9c1fe831"
+uuid = "a9a3c162-d163-4c15-8926-b8794fbefed2"
+version = "0.3.1"
+
+    [deps.SparseArrayKit.extensions]
+    SparseArrayKitSparseArrays = "SparseArrays"
+    SparseArrayKitTensorOperations = "TensorOperations"
+
+    [deps.SparseArrayKit.weakdeps]
+    SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+    TensorOperations = "6aa20fa7-93e2-5fca-9bc0-fbd0db3c71a2"
+
 [[deps.SparseArrays]]
 deps = ["Libdl", "LinearAlgebra", "Random", "Serialization", "SuiteSparse_jll"]
 uuid = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
@@ -2355,6 +2375,12 @@ version = "0.1.1"
 git-tree-sha1 = "ca0969166a028236229f63514992fc073799bb78"
 uuid = "41fe7b60-77ed-43a1-b4f0-825fd5a5650d"
 version = "0.2.0"
+
+[[deps.VectorInterface]]
+deps = ["LinearAlgebra"]
+git-tree-sha1 = "ed8f91274e744e5030c349e76fa98bf68236766f"
+uuid = "409d34a3-91d5-4945-b6ec-7529ddf182d8"
+version = "0.4.4"
 
 [[deps.Vulkan_Loader_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Wayland_jll", "Xorg_libX11_jll", "Xorg_libXrandr_jll", "xkbcommon_jll"]

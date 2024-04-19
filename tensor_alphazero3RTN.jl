@@ -9,6 +9,7 @@ using Graphs
 using LightGraphs
 import Flux
 using Flux: batch
+using SparseArrayKit
 
 
 
@@ -65,7 +66,7 @@ function GI.init(::GameSpec)
   p = 0.8
   graph = LightGraphs.SimpleGraphs.erdos_renyi(N, S)
   n_ed = LightGraphs.ne(graph)
-  A = LightGraphs.adjacency_matrix(graph)
+  A = SparseArray(LightGraphs.adjacency_matrix(graph))
   #A = sparse([2, 3, 4, 5, 7, 8, 9, 1, 3, 4, 6, 7, 8, 9, 1, 2, 4, 5, 6, 7, 8, 1, 2, 3, 6, 1, 3, 7, 8, 2, 3, 4, 7, 8, 9, 1, 2, 3, 5, 6, 8, 9, 1, 2, 3, 5, 6, 7, 1, 2, 6, 7], [1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 9, 9)
   #ef = [4 256; 4 256; 4 64; 4 256; 4 1024; 4 256]
   ef = fill(2.0f0, 2, n_ed)
@@ -167,7 +168,8 @@ function GI.play!(env::GameEnv, action)
   if env.finished == false
     ef = collect(edge_feature(env.fg))
     ef = [c[:] for c in eachcol(ef)]
-    A = copy(env.fg.graph.S)
+    A = SparseArray(copy(env.fg.graph.S))
+    
     
 
     
@@ -178,7 +180,7 @@ function GI.play!(env::GameEnv, action)
     
     A[n1i, n2i] = 0
     A[n2i, n1i] = 0
-    dropzeros!(A)
+    
 
     delete =[edge]
     for i in enumerate(A[n1i,:])

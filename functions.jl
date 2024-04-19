@@ -28,7 +28,7 @@ mutable struct BatchFeatureGraph
 end
 
 function Flux.gpu(bfg::BatchFeatureGraph)
-    return BatchFeatureGraph(Flux.gpu(bfg.fg), Flux.gpu(bfg.graph_indicator))
+    return BatchFeatureGraph(Flux.gpu(bfg.fg), bfg.graph_indicator)
 end
 
 function Flux.batch(fgs::AbstractVector{<:FeaturedGraph})
