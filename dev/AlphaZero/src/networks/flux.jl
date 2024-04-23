@@ -182,9 +182,8 @@ function Network.forward(nn::TwoHeadNetwork, state, graph_indicator = nothing, a
   end
   if !isnothing(graph_indicator) || !isnothing(actions_mask)
     # Assuming graph_indicator is sorted in ascending order
-    counts = count_elements(graph_indicator)  # Get counts of each unique value in graph_indicator
-    keys_sorted = sort(collect(keys(counts)))  # Get sorted keys
-    cumcounts = cumsum([counts[k] for k in keys_sorted])  # Get cumulative counts
+    
+    cumcounts = cumsum([count(==(x), graph_indicator) for x in sort(unique(graph_indicator))])
 
     parts = [vcat(view(p_, i:j), zeros(size(actions_mask, 1) - length(view(p_, i:j)))) for (i, j) in zip([1; cumcounts[1:end-1] .+ 1], cumcounts)]
     p = hcat(parts...)

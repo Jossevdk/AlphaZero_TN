@@ -17,15 +17,15 @@ netparams = NetLib.GraphNetHP(
 
   self_play = SelfPlayParams(
     sim=SimParams(
-      num_games=500,
-      num_workers=8,
-      batch_size=8,
+      num_games=4,
+      num_workers=1,
+      batch_size=1,
       use_gpu=true,
       reset_every=32,
       flip_probability=0.,
       alternate_colors=false),
     mcts=MctsParams(
-      num_iters_per_turn=100,
+      num_iters_per_turn=64,
       cpuct=1.0,
       temperature=PLSchedule([0, 20, 30], [1.0, 1.0, 0.03]),
       dirichlet_noise_ϵ=0.25,
@@ -47,7 +47,7 @@ netparams = NetLib.GraphNetHP(
     update_threshold=0.05)
   
   learning = LearningParams(
-    use_gpu=false,
+    use_gpu=true,
     use_position_averaging=true,
     samples_weighing_policy=LOG_WEIGHT,
     batch_size=1,
@@ -56,8 +56,8 @@ netparams = NetLib.GraphNetHP(
     l2_regularization=1e-4,
     nonvalidity_penalty=1.,
     min_checkpoints_per_epoch=1,
-    max_batches_per_checkpoint=20,
-    num_checkpoints=3)
+    max_batches_per_checkpoint=1,
+    num_checkpoints=1)
   
   params = Params(
     arena=arena,
@@ -93,9 +93,9 @@ netparams = NetLib.GraphNetHP(
   
   benchmark_sim = SimParams(
     arena.sim;
-    num_games=64,
-    num_workers=16,
-    batch_size=16,
+    num_games=4,
+    num_workers=2,
+    batch_size=2,
     alternate_colors=false)
   
       
@@ -107,4 +107,4 @@ benchmark = [
         Benchmark.NetworkOnly(),
         benchmark_sim)]
 
-experiment = AlphaZero.Experiment("TensorContraction_N8_S20", GameSpec(), params, Network, netparams, benchmark)
+experiment = AlphaZero.Experiment("TensorContraction_N10_S20", GameSpec(), params, Network, netparams, benchmark)

@@ -118,7 +118,6 @@ struct Trainer
       Network.convert_input_tuple(network, b)
     end |> Util.cycle_iterator |> Iterators.Stateful
     
-    n = Int(size(X)[end]/batchsize)
     return new(network, samples, params, data, Wmean, Hp, batches_stream)
   end
 end
