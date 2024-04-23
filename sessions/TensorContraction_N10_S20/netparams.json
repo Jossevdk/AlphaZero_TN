@@ -1,6 +1,0 @@
-{
-    "hidden_dim": 2,
-    "output_dim": 1,
-    "use_batch_norm": false,
-    "batch_norm_momentum": 1
-}
