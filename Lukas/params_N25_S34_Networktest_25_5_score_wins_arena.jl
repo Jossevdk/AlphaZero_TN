@@ -16,7 +16,7 @@ env_params = EnvParams(N = 25, S = 34, use_baseline = true, eval_mode=EVALMODE, 
 netparams = NetLib.GraphNetHP(
   input_dim=env_params.use_robust ? 9 : 3,
   hidden_dim=128,
-  num_blocks =4)
+  num_blocks =5)
 
 
   self_play = SelfPlayParams(
