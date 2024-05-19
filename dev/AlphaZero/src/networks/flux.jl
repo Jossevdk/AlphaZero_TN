@@ -81,9 +81,6 @@ function Network.train!(callback, nn::FluxNetwork, opt::Adam, loss, data, n)
   gspec = nn.gspec
   
   for (i, d) in enumerate(data)
-    if GI.hasgraph(gspec)
-      d = (d.W, Flux.batch(d.X), d.A, d.P, d.V)
-    end
     l, grads = lossgrads(params) do
       loss(d...)
     end
@@ -158,6 +155,44 @@ function count_elements(arr)
   return counts
 end
 
+function Network.forward(nn::TwoHeadNetwork, state::BatchFeatureGraph, actions_mask = nothing)
+  # print(array_on_gpu(nn.vhead[end].weight))
+  # print(typeof((nn)))
+  # print(array_on_gpu(node_feature(state)))
+  c = nn.common(state)
+
+  # print(array_on_gpu(node_feature(c)))
+  c = c.fg
+  p_ = nn.phead(c)
+  v = nn.vhead(c)
+  
+ 
+  if array_on_gpu(p_)
+    p_ = permutedims(p_, (2, 1))  # Transpose p
+  else
+    p_ = p_' |> collect
+  end
+
+
+  graph_indicator = state.graph_indicator
+  # Assuming graph_indicator is sorted in ascending order
+  cumcounts = cumsum([count(==(x), graph_indicator) for x in sort(unique(graph_indicator))])
+  parts = [vcat(softmax(view(p_, i:j)), zeros(size(actions_mask, 1) - length(view(p_, i:j)))) for (i, j) in zip([1; cumcounts[1:end-1] .+ 1], cumcounts)]
+  p = hcat(parts...)
+  if array_on_gpu(v)
+    
+    v = map(((i, j),) -> sum(view(v, i:j)), zip([1; cumcounts[1:end-1] .+ 1], cumcounts)) |> CUDA.CuArray
+    v = reshape(v,1,:)
+  else
+    v = [sum(view(v, i:j)) for (i, j) in zip([1; cumcounts[1:end-1] .+ 1], cumcounts)]' |> collect
+  end
+  #print("\n graph_indicator used \n")
+
+  
+  #print(("\n After NN: ", p, v, "\n ======================= \n"))
+  return (p, v)
+end
+
 
 function Network.forward(nn::TwoHeadNetwork, state, graph_indicator = nothing, actions_mask = nothing)
   # print(array_on_gpu(nn.vhead[end].weight))
@@ -165,34 +200,20 @@ function Network.forward(nn::TwoHeadNetwork, state, graph_indicator = nothing, a
   # print(array_on_gpu(node_feature(state)))
   c = nn.common(state)
   # print(array_on_gpu(node_feature(c)))
-
   p_ = nn.phead(c)
-  p_ = softmax(p_)
+  p_ = softmax(p_, dims=2)
   v = nn.vhead(c)
   
 
-  if nn isa GraphNet
-    if array_on_gpu(p_)
-      #v = CUDA.fill(sum(v), 1, 1)
-      p_ = permutedims(p_, (2, 1))  # Transpose p
-    else
-      p_ = p_' |> collect
-      #v = [sum(v)]' |> collect
-    end
-  end
-  if !isnothing(graph_indicator) || !isnothing(actions_mask)
-    # Assuming graph_indicator is sorted in ascending order
-    
-    cumcounts = cumsum([count(==(x), graph_indicator) for x in sort(unique(graph_indicator))])
-
-    parts = [vcat(view(p_, i:j), zeros(size(actions_mask, 1) - length(view(p_, i:j)))) for (i, j) in zip([1; cumcounts[1:end-1] .+ 1], cumcounts)]
-    p = hcat(parts...)
-    v = [sum(view(v, i:j)) for (i, j) in zip([1; cumcounts[1:end-1] .+ 1], cumcounts)]' |> collect
-    #print("\n graph_indicator used \n")
+  if array_on_gpu(p_)
+    v = CUDA.fill(sum(v), 1, 1)
+    p = permutedims(p_, (2, 1))  # Transpose p
   else
-    p = p_
+    p = p_' |> collect
+    v = [sum(v)]' |> collect
   end
 
+   
   
   #print(("\n After NN: ", p, v, "\n ======================= \n"))
   return (p, v)

@@ -288,7 +288,7 @@ The computation is based on a random initial state, assuming that all states hav
 identical footprint.
 """
 function state_memsize(game_spec::AbstractGameSpec)
-  state = current_state(init(game_spec))
+  state = current_state(init(game_spec, id = nothing))
   return Base.summarysize(state)
 end
 
@@ -313,8 +313,8 @@ num_actions(game_spec::AbstractGameSpec) = length(actions(game_spec))
 
 Create a new game environment, initialized in a given state.
 """
-function init(gspec::AbstractGameSpec, state)
-  env = init(gspec)
+function init(gspec::AbstractGameSpec, state; id = nothing, worker_id = 1)
+  env = init(gspec, id = id, worker_id = worker_id)
   set_state!(env, state)
   return env
 end

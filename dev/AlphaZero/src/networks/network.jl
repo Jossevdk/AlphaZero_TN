@@ -273,16 +273,17 @@ function forward_normalized(nn::AbstractNetwork, state, actions_mask)
   if !isa(state, AbstractArray) 
     if size(actions_mask)[2] >1 
       graph_indicator = state.graph_indicator
-      s = state.fg
-      
-      p, v = forward(nn, s, graph_indicator, actions_mask)
+      s = state
+      #s = state
+
+      p, v = forward(nn, s, actions_mask)
     else
       if hasfield(typeof(state), :fg)
         s = state.fg
+        #s = state
       else
         s = state
       end
-
       p, v = forward(nn, s)
       
       p = vcat(p, zeros(length(actions_mask) - length(p)))
@@ -291,9 +292,6 @@ function forward_normalized(nn::AbstractNetwork, state, actions_mask)
   else
     p, v = forward(nn, state)
   end
-
-
-  p = p .* actions_mask
   sp = sum(p, dims=1)
   p = p ./ (sp .+ eps(eltype(p)))
   p_invalid = 1 .- sp
@@ -315,7 +313,6 @@ may want to use a `BatchedOracle` along with an inference server that uses
 [`evaluate_batch`](@ref).
 """
 function evaluate(nn::AbstractNetwork, state)
-  print("\n \n EVALUATING \n \n")
   gspec = game_spec(nn)
   if GI.hasgraph(gspec)
     return evaluate_fg(nn, state)
@@ -334,7 +331,7 @@ end
 
 function evaluate_fg(nn::AbstractNetwork, state)
   gspec = game_spec(nn)
-  actions_mask = GI.actions_mask(GI.init(gspec, state))
+  actions_mask = state.amask
   fg = GI.GetGraph(gspec, state)
   a = Float32.(actions_mask)
   fgnet, anet = to_singletons.(convert_input_tuple(nn, (fg, a)))
@@ -375,7 +372,7 @@ end
 function evaluate_batch_fg(nn::AbstractNetwork, batch)
   gspec = game_spec(nn)
   fgs = [GI.GetGraph(gspec, b) for b in batch]
-  A = Flux.batch([GI.actions_mask(GI.init(gspec, b)) for b in batch])
+  A = Flux.batch([b.amask for b in batch])
   fgb = Flux.batch(fgs)
   fgsnet, Anet = convert_input_tuple(nn, (fgb, Float32.(A)))
   P, V, _ = convert_output_tuple(nn, forward_normalized(nn, fgsnet , Anet))

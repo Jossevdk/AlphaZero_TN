@@ -25,6 +25,13 @@ module AlphaZero
   import LinearAlgebra
   LinearAlgebra.BLAS.set_num_threads(1)
 
+  include("functions.jl")
+  export BatchFeatureGraph
+  export adjListToSparseAdjMatrix
+  export get_nodes_from_edge
+  export get_edge_from_nodes
+  export edge_betweenness_centrality
+
   # Internal helper functions
   include("util.jl")
   using .Util
@@ -67,6 +74,7 @@ module AlphaZero
   # Training params
   include("params.jl")
   export Params
+  export EnvParams
   export MctsParams
   export SimParams
   export SelfPlayParams
@@ -170,9 +178,7 @@ module AlphaZero
   include("common_rl_intf.jl")
   export CommonRLInterfaceWrapper
 
-  # A small library of standard examples
-  include("examples.jl")
-  export Examples
+ 
 
   # Scripts
   include("scripts/scripts.jl")

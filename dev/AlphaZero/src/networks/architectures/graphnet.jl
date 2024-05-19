@@ -29,16 +29,17 @@ struct GraphEConv{A<:AbstractMatrix,B,F,O} <: MessagePassing
     σ::F
     naggr::O
     eaggr
+    gamma
 end
 
 
 function GraphEConv(nef::Int, nnf::Int, out::Int, σ=identity, naggr=mean, eaggr=+;
-    init=glorot_uniform, bias::Bool=true)
+    init=glorot_uniform, bias::Bool=true, gamma::Float32=0.8f0)
 
 W1 = init(out, nnf)
 W2 = init(out, 2*nnf + nef)
 b = Flux.create_bias(W1, bias, out)
-GraphEConv(W1, W2, b, σ, naggr, eaggr)
+GraphEConv(W1, W2, b, σ, naggr, eaggr, gamma)
 end
 
 @functor GraphEConv
@@ -47,17 +48,7 @@ Flux.trainable(l::GraphEConv) = (l.weight1, l.weight2, l.bias)
 
 message(gc::GraphEConv, x_i, x_j::AbstractArray, e_ij) = _matmul(gc.weight2, vcat(e_ij, x_i, x_j))
 
-update(gc::GraphEConv, m::AbstractArray, x::AbstractArray) = gc.σ.(_matmul(gc.weight1, x) .+ m .+ gc.bias)
-
-# For variable graph
-function (l::GraphEConv)(fg::AbstractFeaturedGraph)
-nf = node_feature(fg)
-ef = edge_feature(fg)
-GraphSignals.check_num_nodes(fg, nf)
-GraphSignals.check_num_edges(fg, ef)
-E, V, _ = propagate(l, graph(fg), ef, nf, nothing, l.naggr, l.eaggr, nothing)
-return ConcreteFeaturedGraph(fg, nf=V, ef=E)
-end
+update(gc::GraphEConv, m::AbstractArray, x::AbstractArray) = gc.σ.(_matmul(gc.weight1, x) .+ gc.gamma*m .+ gc.bias)
 
 function update_edge(gn::GraphEConv, e, vi, vj, u)
     return message(gn, vi, vj, e)
@@ -90,19 +81,77 @@ function propagate(gn::GraphEConv, el::NamedTuple, E, V, u, naggr, eaggr, vaggr)
     E = update_batch_edge(gn, el, E, V, u)
     Ē = aggregate_neighbors(gn, el, naggr, E)
     V = update_batch_vertex(gn, el, Ē, V, u)
-
-    E = 0.5f0*_scatter(eaggr, E, el.es)
     
+    E = 0.5f0*_scatter(eaggr, E, el.es)
+
     return E, V, u
+end
+# For variable graph
+function (l::GraphEConv)(fg::AbstractFeaturedGraph)::AbstractFeaturedGraph
+    nf = node_feature(fg)
+    ef = edge_feature(fg)
+    GraphSignals.check_num_nodes(fg, nf)
+    GraphSignals.check_num_edges(fg, ef)
+    E, V, _ = propagate(l, graph(fg)::SparseGraph, ef, nf, nothing, l.naggr, l.eaggr, nothing)
+
+    # PairNorm
+    mean_value = mean(E)
+    E = E .- mean_value
+    E_squared_sum = sum(E .^ 2, dims=1)
+    mean_E_squared_sum = mean(E_squared_sum)
+    eps_ = 0.00001f0
+    E = E ./ sqrt.(eps_ .+ mean_E_squared_sum)
+
+    mean_value_v = mean(V)
+    V = V .- mean_value_v
+    V_squared_sum = sum(V .^ 2, dims=1)
+    mean_V_squared_sum = mean(V_squared_sum)
+    eps_ = 0.00001f0
+    V = V ./ sqrt.(eps_ .+ mean_V_squared_sum)
+
+return ConcreteFeaturedGraph(fg, nf=V, ef=E)
 end
 
 
-@kwdef struct GraphNetHP
+function (l::GraphEConv)(bfg::BatchFeatureGraph)::BatchFeatureGraph
+   
+    fg = bfg.fg
+    graph_indicator = bfg.graph_indicator
+    graph_indicator_v = bfg.graph_indicator_v
+
+    nf = node_feature(fg)
+    ef = edge_feature(fg)
+    GraphSignals.check_num_nodes(fg, nf)
+    GraphSignals.check_num_edges(fg, ef)
+    E, V, _ = propagate(l, graph(fg)::SparseGraph, ef, nf, nothing, l.naggr, l.eaggr, nothing)
     
+    # PairNorm
+    mean_value = _scatter(mean, E, graph_indicator)
+    E = E .- mean_value[:,graph_indicator]
+    E_squared_sum = sum(E .^ 2, dims=1)
+    mean_E_squared_sum = _scatter(mean, E_squared_sum, graph_indicator)
+    eps_ = 0.00001f0
+    E = E ./ sqrt.(eps_ .+ mean_E_squared_sum[:,graph_indicator])
+
+    mean_value_v = _scatter(mean, V, graph_indicator_v)
+    V = V .- mean_value_v[:,graph_indicator_v]
+    V_squared_sum = sum(V .^ 2, dims=1)
+    mean_V_squared_sum = _scatter(mean, V_squared_sum, graph_indicator_v)
+    eps_ = 0.00001f0
+    V = V ./ sqrt.(eps_ .+ mean_V_squared_sum[:,graph_indicator_v])
+
+    return BatchFeatureGraph(ConcreteFeaturedGraph(fg, nf=V, ef=E), graph_indicator, graph_indicator_v)
+    end
+
+
+
+
+
+
+@kwdef struct GraphNetHP
+    input_dim::Int
     hidden_dim::Int
-    output_dim::Int
-    use_batch_norm :: Bool = false
-    batch_norm_momentum :: Float32 = 0.6f0
+    num_blocks::Int
 end
 
 # Define the GraphNet architecture
@@ -117,31 +166,23 @@ end
 function sum_to_vector_layer(x)
     return [mapreduce(identity, +, x)]
 end
+function Graphnetblock(dim)
+    return GraphEConv(dim, dim, dim)
+end
 
 function GraphNet(gspec::AbstractGameSpec, hyper::GraphNetHP)
 
     input_dim = GI.features_dim(gspec)
     common = Chain(
-        GraphEConv(2, 1, 5),
-        GraphEConv(5, 5, 5),
-        GraphEConv(5, 5, 5),
-        GraphEConv(5, 5, 5),
-        GraphEConv(5, 5, 5),
-        GraphEConv(5, 5, 5),
-        GraphEConv(5, 5, 5),
-        GraphEConv(5, 5, 5),
-        GraphEConv(5, 5, 5),
-        GraphEConv(5, 5, 5),
-        GraphEConv(5, 5, 5),
-        GraphEConv(5, 5, 5),
-        GraphEConv(5, 5, 2)
+        GraphEConv(hyper.input_dim, 1, hyper.hidden_dim),
+        [Graphnetblock(hyper.hidden_dim) for i in 1:hyper.num_blocks]...
     )
     
-    phead = Chain(
-        edge_feature, Dense(hyper.hidden_dim, 1, tanh), softmax
+    phead = Chain(GraphEConv(hyper.hidden_dim, hyper.hidden_dim, hyper.hidden_dim),
+        edge_feature, Dense(hyper.hidden_dim, 1, tanh)
     )
-    vhead = Chain(edge_feature, 
-        Dense(hyper.hidden_dim, 1, tanh),
+    vhead = Chain(GraphEConv(hyper.hidden_dim, hyper.hidden_dim, hyper.hidden_dim), edge_feature, 
+        Dense(hyper.hidden_dim, 1)
         
     )
     

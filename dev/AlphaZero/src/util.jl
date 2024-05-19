@@ -186,7 +186,7 @@ function mapreduce(make_worker, args, num_workers, combine, init)
         k = next
         next += 1
         Base.unlock(lock)
-        y = worker.process(args[k])
+        y = worker.process(args[k], i)
         Base.lock(lock)
         ret = combine(ret, y)
         Base.unlock(lock)

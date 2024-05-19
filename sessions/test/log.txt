@@ -1,0 +1,34 @@
+
+Initializing a new AlphaZero environment
+
+  Initial report
+  
+    Number of network parameters: 18,052
+    Number of regularized network parameters: 50
+    Memory footprint per MCTS node: 9952 bytes
+  
+  Running benchmark: Network Only
+  
+
+Loading environment from: sessions/test
+
+Starting iteration 1
+
+  Starting self-play
+  
+Interrupted by the user
+
+ples per second on average
+    Average exploration depth: 1.0
+    MCTS memory footprint per worker: 597.12kB
+    Experience buffer size: 56 (51 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            2855.0723        2841.2805        1.8949915     0.0003367321       4.37775e-9        1.4657819         3.370077
+
+Interrupted by the user
+

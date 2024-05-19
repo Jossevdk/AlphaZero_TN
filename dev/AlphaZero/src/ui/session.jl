@@ -23,12 +23,13 @@ struct SessionReport
 end
 
 function valid_session_report(r::SessionReport)
-  if length(r.benchmark) == length(r.iterations) + 1
-    nduels = length(r.benchmark[1])
-    return all(length(b) == nduels for b in r.benchmark)
-  else
-    return false
-  end
+  # if length(r.benchmark) == length(r.iterations) + 1
+  #   nduels = length(r.benchmark[1])
+  #   return all(length(b) == nduels for b in r.benchmark)
+  # else
+  #   return false
+  # end
+  return true
 end
 
 """
@@ -176,9 +177,9 @@ function save_increment!(session::Session, bench, itrep=nothing)
     # Do the plotting
     params = session.env.params
     plotsdir = joinpath(session.dir, PLOTS_DIR)
-    isnothing(itrep) || plot_iteration(itrep, params, plotsdir, itc)
-    plot_training(params, session.report.iterations, plotsdir)
-    plot_benchmark(params, session.report.benchmark, plotsdir)
+    #isnothing(itrep) || plot_iteration(itrep, params, plotsdir, itc)
+    #plot_training(params, session.report.iterations, plotsdir)
+    #plot_benchmark(params, session.report.benchmark, plotsdir)
   end
 end
 
@@ -286,6 +287,7 @@ function Session(
     # The parameters must be unchanged
     same_json(x, y) = JSON3.write(x) == JSON3.write(y)
     same_json(env.params, e.params) || @info "Using modified parameters"
+    env.params = e.params
     @assert same_json(Network.hyperparams(env.bestnn), e.netparams)
     session = Session(env, dir, logger, autosave, save_intermediate, e.benchmark)
     session.report = load_session_report(dir, env.itc)
@@ -349,7 +351,7 @@ AlphaZero.AlphaZeroPlayer(s::Session; args...) = AlphaZero.AlphaZeroPlayer(s.env
 ##### Utilities for printing reports
 #####
 
-const NUM_COL = Log.ColType(7, x -> fmt(".4f", x))
+const NUM_COL = Log.ColType(15, x -> string(x))
 const BIGINT_COL = Log.ColType(10, n -> format(ceil(Int, n), commas=true))
 
 const LEARNING_STATUS_TABLE = Log.Table([
@@ -443,7 +445,7 @@ function print_report(
     plost = percentage(stats.num_lost, n)
     details = ["$pwon% won, $pdraw% draw, $plost% lost"]
   else
-    wr = round(Int, 100 * (report.avgr + 1) / 2)
+    wr =  100 * (report.avgr + 1) / 2
     details = []
   end
   if nn_replaced

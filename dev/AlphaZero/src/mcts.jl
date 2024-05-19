@@ -163,11 +163,15 @@ end
 # Returns statistics for the current player, along with a boolean indicating
 # whether or not a new node has been created.
 function state_info(env, state)
+  
   if haskey(env.tree, state)
     return (env.tree[state], false)
   else
     (P, V) = env.oracle(state)
+    # print("V: ", V, "\n")
+    # print("P: ", size(P), "\n")
     info = init_state_info(P, V, env.prior_temperature)
+    
     env.tree[state] = info
     return (info, true)
   end
@@ -181,9 +185,12 @@ function uct_scores(info::StateInfo, cpuct, ϵ, η)
   @assert iszero(ϵ) || length(η) == length(info.stats)
   sqrtNtot = sqrt(Ntot(info))
   return map(enumerate(info.stats)) do (i, a)
+    
     Q = a.W / max(a.N, 1)
     P = iszero(ϵ) ? a.P : (1-ϵ) * a.P + ϵ * η[i]
-    Q + cpuct * P * sqrtNtot / (a.N + 1)
+    #Q +  cpuct * P * sqrtNtot / (a.N + 1)
+    Q +  cpuct * P * sqrtNtot / (a.N + 1) #use node average value
+    
   end
 end
 
@@ -196,14 +203,14 @@ end
 # Run a single MCTS simulation, updating the statistics of all traversed states.
 # Return the estimated Q-value for the current player.
 # Modifies the state of the game environment.
-function run_simulation!(env::Env, game; η, root=true)
+function run_simulation!(env::Env, game; η, root=true, worker_id = nothing)
   if GI.game_terminated(game)
     return 0.
   else
     state = GI.current_state(game)
     actions = GI.available_actions(game)
     info, new_node = state_info(env, state)
-
+    
    
     if new_node
       return info.Vest
@@ -212,15 +219,18 @@ function run_simulation!(env::Env, game; η, root=true)
       scores = uct_scores(info, env.cpuct, ϵ, η)
       action_id = argmax(scores)
       action = actions[action_id]
-
-
+      # sleep(1)
+      # print(size(game.fg.ef.signal), "\n")
+      # print(scores, "\n")
+      # print("\n", action, "\n")
       wp = GI.white_playing(game)
-      GI.play!(game, action)
+      GI.play!(game, action, worker_id=worker_id)
+      #print("\n", Array(GI.current_state(game).fg.graph.S), GI.current_state(game).total_reward,GI.current_state(game).reward , GI.current_state(game).o_edge, GI.current_state(game).amask, GI.current_state(game).history,  "\n")
       wr = GI.white_reward(game)
       r = wp ? wr : -wr
       pswitch = wp != GI.white_playing(game)
-      qnext = run_simulation!(env, game, η=η, root=false)
-      qnext = pswitch ? -qnext : qnext
+      qnext = run_simulation!(env, game, η=η, root=false, worker_id=worker_id)
+      qnext = pswitch ? -qnext : qnext            
       q = r + env.gamma * qnext
       update_state_info!(env, state, action_id, q)
       env.total_nodes_traversed += 1
@@ -240,11 +250,11 @@ end
 
 Run `nsims` MCTS simulations from the current state.
 """
-function explore!(env::Env, game, nsims)
+function explore!(env::Env, game, nsims, worker_id)
   η = dirichlet_noise(game, env.noise_α)
   for i in 1:nsims
     env.total_simulations += 1
-    run_simulation!(env, GI.clone(game), η=η)
+    run_simulation!(env, GI.clone(game), η=η, worker_id=worker_id)
   end
 end
 
@@ -256,7 +266,7 @@ Return the recommended stochastic policy on the current state.
 A call to this function must always be preceded by
 a call to [`MCTS.explore!`](@ref).
 """
-function policy(env::Env, game)
+function policy(env::Env, game, id)
   actions = GI.available_actions(game)
   state = GI.current_state(game)
 
@@ -329,3 +339,10 @@ end
 memory_footprint(env::Env) = Base.summarysize(env.tree)
 
 end
+
+
+
+
+
+
+

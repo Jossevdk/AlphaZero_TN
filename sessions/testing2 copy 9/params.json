@@ -1,0 +1,100 @@
+{
+    "env_params": {
+        "N": 25,
+        "S": 34,
+        "use_robust": true,
+        "use_baseline": true,
+        "use_feas_act": true,
+        "best_result": null,
+        "n_best_result": 40,
+        "eval_mode": false
+    },
+    "self_play": {
+        "mcts": {
+            "gamma": 1,
+            "cpuct": 2,
+            "num_iters_per_turn": 240,
+            "temperature": {
+                "xs": [
+                    0,
+                    20,
+                    30
+                ],
+                "ys": [
+                    1,
+                    1,
+                    0.3
+                ]
+            },
+            "dirichlet_noise_ϵ": 0.25,
+            "dirichlet_noise_α": 1,
+            "prior_temperature": 1
+        },
+        "sim": {
+            "num_games": 200,
+            "num_workers": 4,
+            "batch_size": 4,
+            "use_gpu": false,
+            "fill_batches": true,
+            "reset_every": 8,
+            "flip_probability": 0,
+            "alternate_colors": false
+        }
+    },
+    "memory_analysis": null,
+    "learning": {
+        "use_gpu": false,
+        "use_position_averaging": true,
+        "samples_weighing_policy": "LOG_WEIGHT",
+        "optimiser": {
+            "lr": 0.002
+        },
+        "l2_regularization": 0.0001,
+        "rewards_renormalization": 1,
+        "nonvalidity_penalty": 1,
+        "batch_size": 32,
+        "loss_computation_batch_size": 32,
+        "min_checkpoints_per_epoch": 1,
+        "max_batches_per_checkpoint": 200,
+        "num_checkpoints": 3
+    },
+    "arena": {
+        "mcts": {
+            "gamma": 1,
+            "cpuct": 1.5,
+            "num_iters_per_turn": 120,
+            "temperature": {
+                "value": 0.2
+            },
+            "dirichlet_noise_ϵ": 0.05,
+            "dirichlet_noise_α": 1,
+            "prior_temperature": 1
+        },
+        "sim": {
+            "num_games": 32,
+            "num_workers": 1,
+            "batch_size": 1,
+            "use_gpu": false,
+            "fill_batches": true,
+            "reset_every": 1,
+            "flip_probability": 0,
+            "alternate_colors": false
+        },
+        "update_threshold": 0.05
+    },
+    "num_iters": 11,
+    "use_symmetries": false,
+    "ternary_outcome": false,
+    "mem_buffer_size": {
+        "xs": [
+            0,
+            3,
+            6
+        ],
+        "ys": [
+            6000,
+            6000,
+            10000
+        ]
+    }
+}

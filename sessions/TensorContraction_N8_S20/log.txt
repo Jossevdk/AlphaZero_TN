@@ -1,9 +1,0 @@
-
-Loading environment from: sessions/TensorContraction_N8_S20
-
-Starting iteration 1
-
-  Starting self-play
-  
-Interrupted by the user
-

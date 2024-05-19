@@ -91,7 +91,7 @@ function run(env::Env, eval::Evaluation, progress=nothing)
   end
   samples, elapsed = @timed simulate(
     simulator, env.gspec, eval.sim,
-    game_simulated=(() -> next!(progress)))
+    game_simulated=(() -> next!(progress)), network_name = "benchmark")
   gamma = env.params.self_play.mcts.gamma
   rewards, redundancy = rewards_and_redundancy(samples, gamma=gamma)
   return Report.Evaluation(

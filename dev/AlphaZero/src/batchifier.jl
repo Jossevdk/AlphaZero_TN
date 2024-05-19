@@ -64,6 +64,7 @@ function launch_server(f; num_workers, batch_size)
       end
       @assert length(pending) <= num_active
       @assert batch_size <= num_active
+
       if length(pending) >= batch_size && length(pending) > 0
         batch = [p.query for p in pending]
         results = ProfUtils.log_event(;

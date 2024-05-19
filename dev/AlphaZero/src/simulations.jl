@@ -21,19 +21,18 @@
 # This function is typically called by inference servers.
 # """
 function fill_and_evaluate(net, batch; batch_size, fill_batches)
-  #print(batch)
   n = length(batch)
   @assert n > 0
   if !fill_batches
-    return Network.evaluate_batch(net, batch)
+    return Network.evaluate_batch_fg(net, batch)
   else
     nmissing = batch_size - n
     @assert nmissing >= 0
     if nmissing == 0
-      return Network.evaluate_batch(net, batch)
+      return Network.evaluate_batch_fg(net, batch)
     else
       batch = vcat(batch, [batch[1] for _ in 1:nmissing])
-      return Network.evaluate_batch(net, batch)[1:n]
+      return Network.evaluate_batch_fg(net, batch)[1:n]
     end
   end
 end
@@ -210,20 +209,23 @@ function simulate(
     simulator::Simulator,
     gspec::AbstractGameSpec,
     p::SimParams;
-    game_simulated)
+    game_simulated,
+    network_name = nothing)
 
   oracles = simulator.make_oracles()
-  
   spawn_oracles, done =
     batchify_oracles(oracles; p.num_workers, p.batch_size, p.fill_batches)
   return Util.mapreduce(1:p.num_games, p.num_workers, vcat, []) do
+    
     oracles = spawn_oracles()
 
     player = simulator.make_player(oracles)
     worker_sim_id = 0
     # For each worker
-    function simulate_game(sim_id)
+    function simulate_game(sim_id, worker_id)
       worker_sim_id += 1
+      # print("worker_sim_id: ",  worker_sim_id, "\n")
+      # print("sim_id: ",  sim_id, "\n")
       # Switch players' colors if necessary: "_pf" stands for "possibly flipped"
       if isa(player, TwoPlayers) && p.alternate_colors
         colors_flipped = sim_id % 2 == 1
@@ -233,16 +235,19 @@ function simulate(
         player_pf = player
       end
       # Play the game and generate a report
-      trace = play_game(gspec, player_pf, flip_probability=p.flip_probability)
+      trace = play_game(gspec, player_pf, flip_probability=p.flip_probability, id=worker_sim_id -1, worker_id=copy(worker_id), reset_every=p.reset_every, network_name=network_name)
       report = simulator.measure(trace, colors_flipped, player)
+      
       # Reset the player periodically
       if !isnothing(p.reset_every) && worker_sim_id % p.reset_every == 0
         reset_player!(player)
       end
       # Signal that a game has been simulated
       game_simulated()
+      
       return report
     end
+    
     return (process=simulate_game, terminate=done)
   end
 end
@@ -257,7 +262,8 @@ function simulate_distributed(
     simulator::Simulator,
     gspec::AbstractGameSpec,
     p::SimParams;
-    game_simulated)
+    game_simulated,
+    network_name = nothing)
 
   # Spawning a task to keep count of completed simulations
   chan = Distributed.RemoteChannel(()->Channel{Nothing}(1))
@@ -284,7 +290,7 @@ function simulate_distributed(
           simulator,
           gspec,
           SimParams(p; num_games=(w == workers[1] ? num_each + rem : num_each)),
-          game_simulated=remote_game_simulated)
+          game_simulated=remote_game_simulated, network_name=network_name)
         end
     end
   end

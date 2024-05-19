@@ -143,14 +143,14 @@ function pit_networks(gspec, contender, baseline, params, handler)
 end
 
 # Evaluate a single neural network for a one-player game (params::ArenaParams)
-function evaluate_network(gspec, net, params, handler)
+function evaluate_network(gspec, net, params, handler; network_name = nothing)
   make_oracles() = Network.copy(net, on_gpu=params.sim.use_gpu, test_mode=true)
   simulator = Simulator(make_oracles, record_trace) do oracle
     MctsPlayer(gspec, oracle, params.mcts)
   end
   samples = simulate(
     simulator, gspec, params.sim,
-    game_simulated=(() -> Handlers.checkpoint_game_played(handler)))
+    game_simulated=(() -> Handlers.checkpoint_game_played(handler)), network_name=network_name)
   return rewards_and_redundancy(samples, gamma=params.mcts.gamma)
 end
 
@@ -164,9 +164,10 @@ function compare_networks(gspec, contender, baseline, params, handler)
     avgr = mean(rewards_c)
     rewards_b = nothing
   else
-    (rewards_c, red_c), tc = @timed evaluate_network(gspec, contender, params, handler)
-    (rewards_b, red_b), tb = @timed evaluate_network(gspec, baseline, params, handler)
+    (rewards_c, red_c), tc = @timed evaluate_network(gspec, contender, params, handler, network_name="contender")
+    (rewards_b, red_b), tb = @timed evaluate_network(gspec, baseline, params, handler, network_name="baseline")
     avgr = mean(rewards_c) - mean(rewards_b)
+    avgr = mean(rewards_c.>rewards_b)
     red = mean([red_c, red_b])
     t = tc + tb
   end
@@ -204,7 +205,9 @@ function learning_step!(env::Env, handler)
     # Skipping the learning phase
     return dummy_learning_report()
   end
+  print("Creating trainer \n")
   trainer, tconvert = @timed Trainer(env.gspec, env.curnn, experience, lp)
+  print("Trainer created \n")
   #print("\n\n\n °°°°°°°°°°°", trainer.data.X, "\n\n\n")
   init_status = learning_status(trainer)
   status = init_status
@@ -213,6 +216,7 @@ function learning_step!(env::Env, handler)
   nbatches = lp.max_batches_per_checkpoint
   if !iszero(lp.min_checkpoints_per_epoch)
     ntotal = num_batches_total(trainer)
+    print("Total number of batches: ", ntotal, "\n")
     nbatches = min(nbatches, ntotal ÷ lp.min_checkpoints_per_epoch)
   end
   # Loop state variables
@@ -283,14 +287,17 @@ function self_play_step!(env::Env, handler)
     return MctsPlayer(env.gspec, oracle, params.mcts)
   end
   # Run the simulations
-  results, elapsed = @timed simulate_distributed(
+    results, elapsed = @timed simulate_distributed(
     simulator, env.gspec, params.sim,
-    game_simulated=()->Handlers.game_played(handler))
+    game_simulated=()->Handlers.game_played(handler), network_name = "self_play")
+
+  print("Adding to memory \n")
   # Add the collected samples in memory
   new_batch!(env.memory)
   for x in results
     push_trace!(env.memory, x.trace, params.mcts.gamma)
   end
+  print("Memory added \n")
   speed = cur_batch_size(env.memory) / elapsed
   edepth = mean([x.edepth for x in results])
   mem_footprint = maximum([x.mem for x in results])
@@ -326,10 +333,12 @@ function train!(env::Env, handler=nothing)
     resize_memory!(env, env.params.mem_buffer_size[env.itc])
     sprep, spperfs = Report.@timed self_play_step!(env, handler)
     mrep, mperfs = Report.@timed memory_report(env, handler)
+    print("LEARNING STEP \n")
     lrep, lperfs = Report.@timed learning_step!(env, handler)
     rep = Report.Iteration(spperfs, mperfs, lperfs, sprep, mrep, lrep)
     env.itc += 1
     Handlers.iteration_finished(handler, rep)
+    GC.gc()
   end
   Handlers.training_finished(handler)
 end

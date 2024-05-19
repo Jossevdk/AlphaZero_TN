@@ -33,7 +33,7 @@ function convert_sample(
     x = GI.vectorize_state(gspec, e.s)
   end
 
-  a = GI.actions_mask(GI.init(gspec, e.s))
+  a = e.s.amask
   p = zeros(size(a))
   p[a] = e.π
   v = [e.z]
@@ -115,6 +115,9 @@ struct Trainer
     batches = Flux.DataLoader(data; batchsize, partial=false, shuffle=true)
     
     batches_stream = map(batches) do b
+      if GI.hasgraph(gspec)
+        b = (b.W, Flux.batch(b.X), b.A, b.P, b.V)
+      end
       Network.convert_input_tuple(network, b)
     end |> Util.cycle_iterator |> Iterators.Stateful
     
@@ -164,9 +167,6 @@ function learning_status(tr::Trainer, samples)
   # As done now, this is slighly inefficient as we solve the
   # same neural network inference problem twice
   gspec = tr.network.gspec
-  if GI.hasgraph(gspec)
-    samples = (samples.W, Flux.batch(samples.X), samples.A, samples.P, samples.V)
-  end
   W, X, A, P, V = samples
   
   regws = Network.regularized_params(tr.network)
@@ -183,7 +183,12 @@ end
 function learning_status(tr::Trainer)
   batchsize = min(tr.params.loss_computation_batch_size, num_samples(tr))
   batches = Flux.DataLoader(tr.data; batchsize, partial=true)
+  gspec = tr.network.gspec
+
   reports = map(batches) do batch
+    if GI.hasgraph(gspec)
+      batch = (batch.W, Flux.batch(batch.X), batch.A, batch.P, batch.V)
+    end
     batch = Network.convert_input_tuple(tr.network, batch)
     return learning_status(tr, batch)
   end

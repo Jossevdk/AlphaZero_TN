@@ -46,7 +46,7 @@ an action according to the distribution computed by [`think`](@ref), with a
 temperature given by [`player_temperature`](@ref).
 """
 function select_move(player::AbstractPlayer, game, turn_number)
-  actions, π = think(player, game)
+  actions, π = think(player, game, id)
   τ = player_temperature(player, game, turn_number)
   π = apply_temperature(π, τ)
   return actions[Util.rand_categorical(π)]
@@ -63,7 +63,7 @@ A player that picks actions uniformly at random.
 """
 struct RandomPlayer <: AbstractPlayer end
 
-function think(::RandomPlayer, game)
+function think(::RandomPlayer, game, worker_id)
   actions = GI.available_actions(game)
   n = length(actions)
   π = ones(n) ./ length(actions)
@@ -81,12 +81,12 @@ A wrapper on a player that makes it choose a random move
 with a fixed ``ϵ`` probability.
 """
 struct EpsilonGreedyPlayer{P} <: AbstractPlayer
-  player :: P
-  ϵ :: Float64
+  player::P
+  ϵ::Float64
 end
 
-function think(p::EpsilonGreedyPlayer, game)
-  actions, π = think(p.player, game)
+function think(p::EpsilonGreedyPlayer, game, worker_id)
+  actions, π = think(p.player, game, worker_id)
   n = length(actions)
   η = ones(n) ./ n
   return actions, (1 - p.ϵ) * π + p.ϵ * η
@@ -110,12 +110,12 @@ end
 A wrapper on a player that enables overwriting the temperature schedule.
 """
 struct PlayerWithTemperature{P} <: AbstractPlayer
-  player :: P
-  temperature :: AbstractSchedule{Float64}
+  player::P
+  temperature::AbstractSchedule{Float64}
 end
 
-function think(p::PlayerWithTemperature, game)
-  return think(p.player, game)
+function think(p::PlayerWithTemperature, game, worker_id)
+  return think(p.player, game, worker_id)
 end
 
 function reset!(p::PlayerWithTemperature)
@@ -154,10 +154,10 @@ The temperature parameter `τ` can be either a real number or a
 Construct an MCTS player from an oracle and an [`MctsParams`](@ref) structure.
 """
 struct MctsPlayer{M} <: AbstractPlayer
-  mcts :: M
-  niters :: Int
-  timeout :: Union{Float64, Nothing}
-  τ :: AbstractSchedule{Float64} # Temperature
+  mcts::M
+  niters::Int
+  timeout::Union{Float64,Nothing}
+  τ::AbstractSchedule{Float64} # Temperature
   function MctsPlayer(mcts::MCTS.Env; τ, niters, timeout=nothing)
     @assert niters > 0
     @assert isnothing(timeout) || timeout > 0
@@ -167,7 +167,7 @@ end
 
 # Alternative constructor
 function MctsPlayer(
-    game_spec::AbstractGameSpec, oracle, params::MctsParams; timeout=nothing)
+  game_spec::AbstractGameSpec, oracle, params::MctsParams; timeout=nothing)
   mcts = MCTS.Env(game_spec, oracle,
     gamma=params.gamma,
     cpuct=params.cpuct,
@@ -193,16 +193,17 @@ function RandomMctsPlayer(game_spec::AbstractGameSpec, params::MctsParams)
     τ=params.temperature)
 end
 
-function think(p::MctsPlayer, game)
+function think(p::MctsPlayer, game, worker_id)
   if isnothing(p.timeout) # Fixed number of MCTS simulations
-    MCTS.explore!(p.mcts, game, p.niters)
+    MCTS.explore!(p.mcts, game, p.niters, worker_id)
   else # Run simulations until timeout
     start = time()
     while time() - start < p.timeout
-      MCTS.explore!(p.mcts, game, p.niters)
+      MCTS.explore!(p.mcts, game, p.niters, worker_id)
     end
+    print(time() - start, "\n")
   end
-  return MCTS.policy(p.mcts, game)
+  return MCTS.policy(p.mcts, game, worker_id)
 end
 
 function player_temperature(p::MctsPlayer, game, turn)
@@ -224,10 +225,10 @@ A player that uses the policy output by a neural network directly,
 instead of relying on MCTS. The given neural network must be in test mode.
 """
 struct NetworkPlayer{N} <: AbstractPlayer
-  network :: N
+  network::N
 end
 
-function think(p::NetworkPlayer, game)
+function think(p::NetworkPlayer, game, worker_id)
   actions = GI.available_actions(game)
   state = GI.current_state(game)
   π, _ = p.network(state)
@@ -245,18 +246,18 @@ If `white` and `black` are two [`AbstractPlayer`](@ref), then
 `TwoPlayers(white, black)` is a player that behaves as `white` when `white`
 is to play and as `black` when `black` is to play.
 """
-struct TwoPlayers{W, B} <: AbstractPlayer
-  white :: W
-  black :: B
+struct TwoPlayers{W,B} <: AbstractPlayer
+  white::W
+  black::B
 end
 
 flipped_colors(p::TwoPlayers) = TwoPlayers(p.black, p.white)
 
-function think(p::TwoPlayers, game)
+function think(p::TwoPlayers, game, worker_id)
   if GI.white_playing(game)
-    return think(p.white, game)
+    return think(p.white, game, worker_id)
   else
-    return think(p.black, game)
+    return think(p.black, game, worker_id)
   end
 end
 
@@ -295,9 +296,11 @@ Simulate a game by an [`AbstractPlayer`](@ref).
   is _flipped_ randomly at every turn with probability ``p``,
   using [`GI.apply_random_symmetry!`](@ref).
 """
-function play_game(gspec, player; flip_probability=0.)
-  game = GI.init(gspec)
+function play_game(gspec, player; flip_probability=0.0, id, worker_id, reset_every, network_name=nothing)
+  game = GI.init(gspec, id=id, worker_id=worker_id, reset_every=reset_every, network_name=network_name)
   trace = Trace(GI.current_state(game))
+  start = Array(game.fg.graph.S)
+
   while true
     if GI.game_terminated(game)
       return trace
@@ -305,11 +308,12 @@ function play_game(gspec, player; flip_probability=0.)
     if !iszero(flip_probability) && rand() < flip_probability
       GI.apply_random_symmetry!(game)
     end
-    actions, π_target = think(player, game)
+    actions, π_target = think(player, game, worker_id)
     τ = player_temperature(player, game, length(trace))
     π_sample = apply_temperature(π_target, τ)
     a = actions[Util.rand_categorical(π_sample)]
-    GI.play!(game, a)
+    
+    GI.play!(game, a, worker_id=worker_id, playing=true)
     push!(trace, π_target, GI.white_reward(game), GI.current_state(game))
   end
 end
@@ -358,14 +362,14 @@ function interactive! end
 
 function interactive!(game::AbstractGameEnv, player)
   try
-  GI.render(game)
-  turn = 0
-  while !GI.game_terminated(game)
-    action = select_move(player, game, turn)
-    GI.play!(game, action)
     GI.render(game)
-    turn += 1
-  end
+    turn = 0
+    while !GI.game_terminated(game)
+      action = select_move(player, game, turn)
+      GI.play!(game, action)
+      GI.render(game)
+      turn += 1
+    end
   catch e
     isa(e, Quit) || rethrow(e)
     return

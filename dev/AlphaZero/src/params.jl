@@ -2,6 +2,17 @@
 ##### AlphaZero Parameters
 #####
 
+@kwdef mutable struct EnvParams
+  N :: Int
+  S :: Int
+  use_robust::Bool = false
+  use_baseline :: Bool = false
+  use_feas_act :: Bool = false
+  best_result :: Union{Float32, Nothing} = nothing
+  n_best_result :: Union{Int, Nothing} = nothing
+  eval_mode :: Bool = false
+end
+
 """
 Parameters of an MCTS player.
 
@@ -320,6 +331,7 @@ In the original AlphaGo Zero paper:
   as an average game of Go lasts about 200 turns.
 """
 @kwdef struct Params
+  env_params :: EnvParams
   self_play :: SelfPlayParams
   memory_analysis :: Union{Nothing, MemAnalysisParams} = nothing
   learning :: LearningParams
@@ -330,7 +342,7 @@ In the original AlphaGo Zero paper:
   mem_buffer_size :: PLSchedule{Int}
 end
 
-for T in [MctsParams, SimParams, ArenaParams, SelfPlayParams, LearningParams, Params]
+for T in [EnvParams, MctsParams, SimParams, ArenaParams, SelfPlayParams, LearningParams, Params]
   Util.generate_update_constructor(T) |> eval
 end
 
