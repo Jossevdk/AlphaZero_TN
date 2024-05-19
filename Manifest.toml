@@ -497,7 +497,7 @@ version = "2.2.4+0"
 
 [[deps.EinExprs]]
 deps = ["AbstractTrees", "Combinatorics", "Compat", "DataStructures", "Graphs", "LinearAlgebra", "PackageExtensionCompat", "SparseArrays", "Suppressor"]
-path = "/home/josse/Documents/thesis/github_AZTN/AlphaZero_TN/dev/EinExprs"
+path = "dev/EinExprs"
 uuid = "b1794770-133b-4de1-afb4-526377e9f4c5"
 version = "0.6.6"
 
