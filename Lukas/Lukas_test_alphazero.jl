@@ -17,7 +17,7 @@ print(nworkers())
 @everywhere global EVALMODE = false
 for it in 1:15
     GC.gc()
-    @everywhere global ITERATION = it
+    global ITERATION = it
     @everywhere include("params_N25_S34_Networktest_25_5_score_wins_arena.jl")
     @everywhere include("tensor_alphazeroRTN_greedy_averaged.jl")
 
