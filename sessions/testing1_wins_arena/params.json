@@ -36,7 +36,7 @@
             "batch_size": 4,
             "use_gpu": false,
             "fill_batches": true,
-            "reset_every": 8,
+            "reset_every": 4,
             "flip_probability": 0,
             "alternate_colors": false
         }
@@ -82,7 +82,7 @@
         },
         "update_threshold": 0.55
     },
-    "num_iters": 1,
+    "num_iters": 2,
     "use_symmetries": false,
     "ternary_outcome": false,
     "mem_buffer_size": {

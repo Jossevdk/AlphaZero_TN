@@ -48,3 +48,53 @@ Starting iteration 1
 
 Training completed
 
+
+Loading environment from: sessions/testing1_wins_arena
+
+Starting iteration 2
+
+  Starting self-play
+  
+    Generating 2 samples per second on average
+    Average exploration depth: 4.6
+    MCTS memory footprint per worker: 212.32MB
+    Experience buffer size: 6,000 (5,197 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            2399.8655        2306.1904        1.1118007     0.0003960611   -4.0147632e-11        1.9068067        2.9940715
+            2401.2393        2306.7131        1.0633665    0.00041298664     8.205302e-10        1.9068067        3.0112302
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.38, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            2401.2393        2306.7131        1.0633665    0.00041298664     8.205302e-10        1.9068067        3.0112302
+            2396.2822        2302.2017          1.07114    0.00042084066   -8.4398066e-10        1.9068067         2.963077
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.66 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            2396.2822        2302.2017          1.07114    0.00042084066   -8.4398066e-10        1.9068067         2.963077
+            2390.0654        2296.4392         1.076209    0.00040642635    3.1110198e-10        1.9068067         2.951827
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.62, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -13.36, redundancy: 7.2%
+
+Training completed
+
