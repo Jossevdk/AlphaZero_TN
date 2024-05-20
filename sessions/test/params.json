@@ -13,7 +13,7 @@
         "mcts": {
             "gamma": 1,
             "cpuct": 2,
-            "num_iters_per_turn": 4,
+            "num_iters_per_turn": 100,
             "temperature": {
                 "xs": [
                     0,
@@ -31,12 +31,12 @@
             "prior_temperature": 1
         },
         "sim": {
-            "num_games": 8,
+            "num_games": 200,
             "num_workers": 4,
             "batch_size": 4,
             "use_gpu": false,
             "fill_batches": true,
-            "reset_every": 8,
+            "reset_every": 4,
             "flip_probability": 0,
             "alternate_colors": false
         }
@@ -62,7 +62,7 @@
         "mcts": {
             "gamma": 1,
             "cpuct": 2,
-            "num_iters_per_turn": 2,
+            "num_iters_per_turn": 50,
             "temperature": {
                 "value": 0.2
             },
@@ -71,7 +71,7 @@
             "prior_temperature": 1
         },
         "sim": {
-            "num_games": 8,
+            "num_games": 32,
             "num_workers": 1,
             "batch_size": 1,
             "use_gpu": false,
@@ -80,7 +80,7 @@
             "flip_probability": 0,
             "alternate_colors": false
         },
-        "update_threshold": 0.05
+        "update_threshold": 0.55
     },
     "num_iters": 2,
     "use_symmetries": false,
@@ -94,7 +94,7 @@
         "ys": [
             6000,
             6000,
-            10000
+            7000
         ]
     }
 }

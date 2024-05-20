@@ -71,13 +71,13 @@ netparams = NetLib.GraphNetHP(
     arena=arena,
     self_play=self_play,
     learning=learning,
-    num_iters=3,
+    num_iters=iteration,
     ternary_outcome=false,
     use_symmetries=false,
     memory_analysis=nothing,
     mem_buffer_size=PLSchedule(
     [      0,        3, 6],
-    [6_000, 6_000, 10_000]))
+    [6_000, 6_000, 7_000]))
   
   #####
   ##### Evaluation benchmark

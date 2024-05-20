@@ -1,3 +1,4 @@
+
 using Distributed
 using Profile
 
@@ -12,16 +13,25 @@ print(nworkers())
 
 
 
-
+@everywhere global ITERATION = 1
 @everywhere global EVALMODE = false
-@everywhere include("params_N25_S34_Networktest_25_5_score_wins_arena.jl")
-@everywhere include("tensor_alphazeroRTN_greedy_averaged.jl")
+for it in 1:15
+    GC.gc()
+    @everywhere global ITERATION = it
+    @everywhere include("params_N25_S34_Networktest_25_5_score_wins_arena.jl")
+    @everywhere include("tensor_alphazeroRTN_greedy_averaged.jl")
 
-experiment = AlphaZero.Experiment("Lukas_testing1_wins_arena", GameSpec(), params, Network, netparams, benchmark)
+    experiment = AlphaZero.Experiment("Lukas_testing1_wins_arena", GameSpec(), params, Network, netparams, benchmark)
 
 
 
-#Scripts.test_game(experiment)
-Profile.init(n = 10^8, delay = 0.1)
-Ses = Session(experiment) 
-resume!(Ses)
+    #Scripts.test_game(experiment)
+    Profile.init(n=10^8, delay=0.1)
+    Ses = Session(experiment)
+    resume!(Ses)
+    print("\n\n\n ################ITERATION ENDED################## \n\n\n")
+    sleep(2)
+    GC.gc()
+
+    
+end

@@ -82,7 +82,7 @@
         },
         "update_threshold": 0.55
     },
-    "num_iters": 2,
+    "num_iters": 3,
     "use_symmetries": false,
     "ternary_outcome": false,
     "mem_buffer_size": {
@@ -94,7 +94,7 @@
         "ys": [
             6000,
             6000,
-            10000
+            7000
         ]
     }
 }

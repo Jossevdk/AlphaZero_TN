@@ -98,3 +98,68 @@ Starting iteration 2
 
 Training completed
 
+
+Loading environment from: sessions/testing1_wins_arena
+
+Starting iteration 3
+
+  Starting self-play
+  
+    Generating 2 samples per second on average
+    Average exploration depth: 3.6
+    MCTS memory footprint per worker: 198.50MB
+    Experience buffer size: 6,000 (5,118 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            17.329597       15.7817545        1.2259626    0.00040642632   -5.9088096e-10        1.7551128         2.950541
+            5.1717067        3.8765113        1.1529725    0.00040908184    -1.4229024e-9        1.7551128        2.8925982
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.38, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            5.1717067        3.8765113        1.1529725    0.00040908184    -1.4229024e-9        1.7551128        2.8925982
+            5.1123424        3.8829741        1.0932031    0.00047976244    -1.7386101e-9        1.7551128        2.8856015
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.41, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            5.1123424        3.8829741        1.0932031    0.00047976244    -1.7386101e-9        1.7551128        2.8856015
+            5.0020003        3.7963266        1.0734787     0.0005658502     8.851949e-10        1.7551128        2.8775816
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.50, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -40.81, redundancy: 6.5%
+
+Training completed
+
+
+Loading environment from: sessions/testing1_wins_arena
+
+Training completed
+
+
+Loading environment from: sessions/testing1_wins_arena
+
+Training completed
+
+
+Loading environment from: sessions/testing1_wins_arena
+
+Training completed
+
