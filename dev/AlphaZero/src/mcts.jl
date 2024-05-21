@@ -33,12 +33,12 @@ from it (a rollout). Moreover, it puts a uniform prior on available actions.
 Therefore, it can be used to implement the "vanilla" MCTS algorithm.
 """
 struct RolloutOracle{GameSpec} <: Function
-  gspec :: GameSpec
-  gamma :: Float64
-  RolloutOracle(gspec, γ=1.) = new{typeof(gspec)}(gspec, γ)
+  gspec::GameSpec
+  gamma::Float64
+  RolloutOracle(gspec, γ=1.0) = new{typeof(gspec)}(gspec, γ)
 end
 
-function rollout!(game, γ=1.)
+function rollout!(game, γ=1.0)
   action = rand(GI.available_actions(game))
   GI.play!(game, action)
   wr = GI.white_reward(game)
@@ -60,14 +60,14 @@ function (r::RolloutOracle)(state)
 end
 
 struct RandomOracle{GameSpec}
-  gspec :: GameSpec
+  gspec::GameSpec
 end
 
 function (r::RandomOracle)(state)
   g = GI.init(r.gspec, state)
   n = length(GI.available_actions(g))
   P = ones(n) ./ n
-  V = 0.
+  V = 0.0
   return P, V
 end
 
@@ -76,14 +76,14 @@ end
 #####
 
 struct ActionStats
-  P :: Float32 # Prior probability as given by the oracle
-  W :: Float64 # Cumulated Q-value for the action (Q = W/N)
-  N :: Int # Number of times the action has been visited
+  P::Float32 # Prior probability as given by the oracle
+  W::Float64 # Cumulated Q-value for the action (Q = W/N)
+  N::Int # Number of times the action has been visited
 end
 
 struct StateInfo
-  stats :: Vector{ActionStats}
-  Vest  :: Float32 # Value estimate given by the oracle
+  stats::Vector{ActionStats}
+  Vest::Float32 # Value estimate given by the oracle
 end
 
 Ntot(b::StateInfo) = sum(s.N for s in b.stats)
@@ -121,30 +121,30 @@ by the neural network in the UCT formula, one uses ``(1-ϵ)p + ϵη`` where ``η
 is drawn once per call to [`MCTS.explore!`](@ref) from a Dirichlet distribution
 of parameter ``α``.
 """
-mutable struct Env{State, Oracle}
+mutable struct Env{State,Oracle}
   # Store (nonterminal) state statistics assuming the white player is to play
-  tree :: Dict{State, StateInfo}
+  tree::Dict{State,StateInfo}
   # External oracle to evaluate positions
-  oracle :: Oracle
+  oracle::Oracle
   # Parameters
-  gamma :: Float64 # Discount factor
-  cpuct :: Float64
-  noise_ϵ :: Float64
-  noise_α :: Float64
-  prior_temperature :: Float64
+  gamma::Float64 # Discount factor
+  cpuct::Float64
+  noise_ϵ::Float64
+  noise_α::Float64
+  prior_temperature::Float64
   # Performance statistics
-  total_simulations :: Int64
-  total_nodes_traversed :: Int64
+  total_simulations::Int64
+  total_nodes_traversed::Int64
   # Game specification
-  gspec :: GI.AbstractGameSpec
+  gspec::GI.AbstractGameSpec
 
   function Env(gspec, oracle;
-      gamma=1., cpuct=1., noise_ϵ=0., noise_α=1., prior_temperature=1.)
+    gamma=1.0, cpuct=1.0, noise_ϵ=0.0, noise_α=1.0, prior_temperature=1.0)
     S = GI.state_type(gspec)
-    tree = Dict{S, StateInfo}()
+    tree = Dict{S,StateInfo}()
     total_simulations = 0
     total_nodes_traversed = 0
-    new{S, typeof(oracle)}(
+    new{S,typeof(oracle)}(
       tree, oracle, gamma, cpuct, noise_ϵ, noise_α, prior_temperature,
       total_simulations, total_nodes_traversed, gspec)
   end
@@ -163,7 +163,7 @@ end
 # Returns statistics for the current player, along with a boolean indicating
 # whether or not a new node has been created.
 function state_info(env, state)
-  
+
   if haskey(env.tree, state)
     return (env.tree[state], false)
   else
@@ -171,7 +171,7 @@ function state_info(env, state)
     # print("V: ", V, "\n")
     # print("P: ", size(P), "\n")
     info = init_state_info(P, V, env.prior_temperature)
-    
+
     env.tree[state] = info
     return (info, true)
   end
@@ -184,14 +184,18 @@ end
 function uct_scores(info::StateInfo, cpuct, ϵ, η)
   @assert iszero(ϵ) || length(η) == length(info.stats)
   sqrtNtot = sqrt(Ntot(info))
-  mean_Q = abs(mean(a.W / max(a.N, 1) for a in info.stats if a.W != 0))
+  if all(a.W == 0 for a in info.stats)
+    mean_Q = 0
+  else
+    mean_Q = abs(mean(a.W / max(a.N, 1) for a in info.stats if a.W != 0))
+  end
   return map(enumerate(info.stats)) do (i, a)
-    
+
     Q = a.W / max(a.N, 1)
-    P = iszero(ϵ) ? a.P : (1-ϵ) * a.P + ϵ * η[i]
+    P = iszero(ϵ) ? a.P : (1 - ϵ) * a.P + ϵ * η[i]
     #Q +  cpuct * P * sqrtNtot / (a.N + 1)
-    Q +  cpuct*mean_Q * P * sqrtNtot / (a.N + 1) #use node average value
-    
+    Q + cpuct * mean_Q * P * sqrtNtot / (a.N + 1) #use node average value
+
   end
 end
 
@@ -204,19 +208,19 @@ end
 # Run a single MCTS simulation, updating the statistics of all traversed states.
 # Return the estimated Q-value for the current player.
 # Modifies the state of the game environment.
-function run_simulation!(env::Env, game; η, root=true, worker_id = nothing)
+function run_simulation!(env::Env, game; η, root=true, worker_id=nothing)
   if GI.game_terminated(game)
-    return 0.
+    return 0.0
   else
     state = GI.current_state(game)
     actions = GI.available_actions(game)
     info, new_node = state_info(env, state)
-    
-   
+
+
     if new_node
       return info.Vest
     else
-      ϵ = root ? env.noise_ϵ : 0.
+      ϵ = root ? env.noise_ϵ : 0.0
       scores = uct_scores(info, env.cpuct, ϵ, η)
       action_id = argmax(scores)
       action = actions[action_id]
@@ -231,7 +235,7 @@ function run_simulation!(env::Env, game; η, root=true, worker_id = nothing)
       r = wp ? wr : -wr
       pswitch = wp != GI.white_playing(game)
       qnext = run_simulation!(env, game, η=η, root=false, worker_id=worker_id)
-      qnext = pswitch ? -qnext : qnext            
+      qnext = pswitch ? -qnext : qnext
       q = r + env.gamma * qnext
       update_state_info!(env, state, action_id, q)
       env.total_nodes_traversed += 1
@@ -272,7 +276,8 @@ function policy(env::Env, game, id)
   state = GI.current_state(game)
 
   info =
-    try env.tree[state]
+    try
+      env.tree[state]
     catch e
       if isa(e, KeyError)
         error("MCTS.explore! must be called before MCTS.policy")
@@ -322,7 +327,7 @@ function memory_footprint_per_node(gspec)
   # For every element, a state and a pointer are stored
   size_key = 2 * (GI.state_memsize(gspec) + sizeof(Int))
   dummy_stats = StateInfo([
-    ActionStats(0, 0, 0) for i in 1:GI.num_actions(gspec)], 0)
+      ActionStats(0, 0, 0) for i in 1:GI.num_actions(gspec)], 0)
   size_stats = Base.summarysize(dummy_stats)
   return size_key + size_stats
 end
