@@ -181,7 +181,7 @@ function GraphNet(gspec::AbstractGameSpec, hyper::GraphNetHP)
     )
     
     phead = Chain(GraphEConv(hyper.hidden_dim, hyper.hidden_dim, hyper.hidden_dim),
-        edge_feature, Dense(hyper.hidden_dim, 1, tanh)
+        edge_feature, Dense(hyper.hidden_dim, 1)
     )
     vhead = Chain(GraphEConv(hyper.hidden_dim, hyper.hidden_dim, hyper.hidden_dim), edge_feature, 
         Dense(hyper.hidden_dim, 1, neg_abs)
