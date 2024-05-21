@@ -184,7 +184,7 @@ end
 function uct_scores(info::StateInfo, cpuct, ϵ, η)
   @assert iszero(ϵ) || length(η) == length(info.stats)
   sqrtNtot = sqrt(Ntot(info))
-  mean_Q = mean(a.W / max(a.N, 1) for a in info.stats)
+  mean_Q = abs(mean(a.W / max(a.N, 1) for a in info.stats))
   return map(enumerate(info.stats)) do (i, a)
     
     Q = a.W / max(a.N, 1)
