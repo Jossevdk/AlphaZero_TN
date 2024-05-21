@@ -208,3 +208,8 @@ Starting iteration 4
 
 Training completed
 
+
+Loading environment from: sessions/new_testing1
+
+Training completed
+

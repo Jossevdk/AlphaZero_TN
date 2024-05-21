@@ -170,6 +170,8 @@ function Graphnetblock(dim)
     return GraphEConv(dim, dim, dim)
 end
 
+neg_abs(x) = -abs(x)
+
 function GraphNet(gspec::AbstractGameSpec, hyper::GraphNetHP)
 
     input_dim = GI.features_dim(gspec)
@@ -182,7 +184,7 @@ function GraphNet(gspec::AbstractGameSpec, hyper::GraphNetHP)
         edge_feature, Dense(hyper.hidden_dim, 1, tanh)
     )
     vhead = Chain(GraphEConv(hyper.hidden_dim, hyper.hidden_dim, hyper.hidden_dim), edge_feature, 
-        Dense(hyper.hidden_dim, 1, -abs)
+        Dense(hyper.hidden_dim, 1, neg_abs)
         
     )
     

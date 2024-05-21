@@ -20,7 +20,7 @@ for it in 1:5
     @everywhere include("params/params_N25_S34_Networktest_25_5_score_wins_arena.jl")
     @everywhere include("environments/tensor_alphazeroRTN.jl")
 
-    experiment = AlphaZero.Experiment("new_testing1", GameSpec(), params, Network, netparams, benchmark)
+    experiment = AlphaZero.Experiment("testing1_no_average", GameSpec(), params, Network, netparams, benchmark)
 
 
 
