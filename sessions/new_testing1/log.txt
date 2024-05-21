@@ -158,3 +158,53 @@ Starting iteration 3
 
 Training completed
 
+
+Loading environment from: sessions/new_testing1
+
+Starting iteration 4
+
+  Starting self-play
+  
+    Generating 2 samples per second on average
+    Average exploration depth: 8.9
+    MCTS memory footprint per worker: 105.92MB
+    Experience buffer size: 6,000 (3,390 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            57.156616         53.32457         2.302874    0.00047470065    4.6411291e-10        0.4419139        2.7469265
+            55.758842        52.026695        2.2567258    0.00050191244    4.4965714e-10        0.4419139        2.7221744
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.41, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            55.758842        52.026695        2.2567258    0.00050191244    4.4965714e-10        0.4419139        2.7221744
+            55.922276         52.19586         2.240675      0.000514515     1.7061473e-9        0.4419139        2.7149308
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.19, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            55.922276         52.19586         2.240675      0.000514515     1.7061473e-9        0.4419139        2.7149308
+            55.618946        51.900665        2.2411222     0.0005264517     5.144141e-10        0.4419139          2.71529
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.19, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -31.50, redundancy: 8.5%
+
+Training completed
+

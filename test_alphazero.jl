@@ -14,11 +14,11 @@ print(nworkers())
 
 @everywhere global iteration = 1
 @everywhere global EVALMODE = false
-for it in 4:5
+for it in 1:5
     GC.gc()
     global iteration = it
     @everywhere include("params/params_N25_S34_Networktest_25_5_score_wins_arena.jl")
-    @everywhere include("environments/tensor_alphazeroRTN_greedy_averaged.jl")
+    @everywhere include("environments/tensor_alphazeroRTN.jl")
 
     experiment = AlphaZero.Experiment("new_testing1", GameSpec(), params, Network, netparams, benchmark)
 

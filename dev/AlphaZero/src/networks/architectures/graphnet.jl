@@ -182,7 +182,7 @@ function GraphNet(gspec::AbstractGameSpec, hyper::GraphNetHP)
         edge_feature, Dense(hyper.hidden_dim, 1, tanh)
     )
     vhead = Chain(GraphEConv(hyper.hidden_dim, hyper.hidden_dim, hyper.hidden_dim), edge_feature, 
-        Dense(hyper.hidden_dim, 1)
+        Dense(hyper.hidden_dim, 1, -abs)
         
     )
     

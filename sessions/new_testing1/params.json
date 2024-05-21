@@ -82,7 +82,7 @@
         },
         "update_threshold": 0.55
     },
-    "num_iters": 3,
+    "num_iters": 4,
     "use_symmetries": false,
     "ternary_outcome": false,
     "mem_buffer_size": {
