@@ -518,7 +518,7 @@ function GI.play!(env::GameEnv, action; worker_id=1, playing=false)
 
         tenv.best_result[worker_id] = copy(env.total_reward)
       else
-        #print("finished worse!",worker_id, "\n\n")
+        env.total_reward = tenv.best_result[worker_id]
       end
     end
   end

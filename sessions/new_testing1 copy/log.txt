@@ -1,0 +1,160 @@
+
+Initializing a new AlphaZero environment
+
+  Initial report
+  
+    Number of network parameters: 18,052
+    Number of regularized network parameters: 50
+    Memory footprint per MCTS node: 9952 bytes
+  
+  Running benchmark: Network Only
+  
+    Average reward: -38.58, redundancy: 12.1%
+
+Starting iteration 1
+
+  Starting self-play
+  
+    Generating 2 samples per second on average
+    Average exploration depth: 6.0
+    MCTS memory footprint per worker: 161.85MB
+    Experience buffer size: 4,466 (3,547 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            317.72943        325.17032        2.2533584     0.0004280545   -2.8053435e-10        0.7686466        2.9047809
+             310.4453        317.98737        1.9344913    0.00044557144   -1.4118019e-10        0.7686466        2.7776604
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.12 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+             310.4453        317.98737        1.9344913    0.00044557144   -1.4118019e-10        0.7686466        2.7776604
+            307.80835        315.32938        1.8896728    0.00046135124   -1.4112218e-10        0.7686466        2.7518034
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.81 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            307.80835        315.32938        1.8896728    0.00046135124   -1.4112218e-10        0.7686466        2.7518034
+            303.21143         310.5641        1.8648082     0.0004854663    -1.1886322e-9        0.7686466        2.7209322
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.41, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -10.04, redundancy: 7.9%
+
+Training completed
+
+
+Loading environment from: sessions/new_testing1
+
+Starting iteration 2
+
+  Starting self-play
+  
+    Generating 2 samples per second on average
+    Average exploration depth: 8.1
+    MCTS memory footprint per worker: 90.01MB
+    Experience buffer size: 6,000 (4,127 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            24.614635        21.795662        2.3589103     0.0004854663    -1.4862356e-9        0.5925054         2.719311
+            23.160332        20.536144        2.1662786    0.00047424287   -3.5975034e-10        0.5925054        2.7881055
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.12, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            23.160332        20.536144        2.1662786    0.00047424287   -3.5975034e-10        0.5925054        2.7881055
+             22.84623        20.233366        2.1608846    0.00048547226     2.6174725e-9        0.5925054        2.7599003
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.28, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+             22.84623        20.233366        2.1608846    0.00048547226     2.6174725e-9        0.5925054        2.7599003
+            22.805662        20.237045        2.1169982    0.00048154307    -1.1611955e-9        0.5925054         2.732903
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.22, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -15.93, redundancy: 8.4%
+
+Training completed
+
+
+Loading environment from: sessions/new_testing1
+
+Starting iteration 3
+
+  Starting self-play
+  
+    Generating 2 samples per second on average
+    Average exploration depth: 7.6
+    MCTS memory footprint per worker: 98.68MB
+    Experience buffer size: 6,000 (3,598 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            69.339935        67.828285         2.331212     0.0004815431    -6.288045e-10       0.47722474         2.769622
+             64.56386        63.053665         2.337696     0.0004660146    1.1320618e-10       0.47722474        2.8002336
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.16, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+             64.56386        63.053665         2.337696     0.0004660146    1.1320618e-10       0.47722474        2.8002336
+            64.720345        63.232063         2.310354    0.00047214632   -1.3910138e-10       0.47722474        2.7783728
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.28, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            64.720345        63.232063         2.310354    0.00047214632   -1.3910138e-10       0.47722474        2.7783728
+             64.42069        62.951332         2.292526    0.00047470062    -3.2407506e-9       0.47722474        2.7650974
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.44, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -9.40, redundancy: 6.3%
+
+Training completed
+

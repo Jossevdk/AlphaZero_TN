@@ -314,7 +314,7 @@ end
 function rewards_and_redundancy(samples; gamma)
   rewards = map(samples) do s
     wr = total_reward(s.trace, gamma)
-    return s.colors_flipped ? -wr : wr
+    return s.colors_flipped ? -wr : wr #last(s.trace.states).total_reward#
   end
   states = [st for s in samples for st in s.trace.states]
   redundancy = compute_redundancy(states)

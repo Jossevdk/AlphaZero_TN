@@ -10,7 +10,7 @@ Network = NetLib.GraphNet
 #   use_batch_norm=false,
 #   batch_norm_momentum=1.)
 
-env_params = EnvParams(N = 25, S = 34, use_baseline = true, eval_mode=EVALMODE, use_robust = true, use_feas_act=true, n_best_result = 40)
+env_params = EnvParams(N = 25, S = nedges, use_baseline = true, eval_mode=EVALMODE, use_robust = true, use_feas_act=true, n_best_result = 40)
 
 
 netparams = NetLib.GraphNetHP(
@@ -71,7 +71,7 @@ netparams = NetLib.GraphNetHP(
     arena=arena,
     self_play=self_play,
     learning=learning,
-    num_iters=3,
+    num_iters=21,
     ternary_outcome=false,
     use_symmetries=false,
     memory_analysis=nothing,
