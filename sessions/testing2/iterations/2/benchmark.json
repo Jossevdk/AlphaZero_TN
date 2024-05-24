@@ -2,7 +2,7 @@
     {
         "legend": "Network Only",
         "avgr": -1,
-        "redundancy": 0.07201646090534974,
+        "redundancy": 0.0898876404494382,
         "rewards": [
             -1,
             -1,
@@ -46,6 +46,6 @@
             -1
         ],
         "baseline_rewards": null,
-        "time": 0.398841018
+        "time": 0.304951056
     }
 ]

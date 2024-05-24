@@ -184,8 +184,8 @@ function Network.forward(nn::TwoHeadNetwork, state::BatchFeatureGraph, actions_m
     v = map(((i, j),) -> sum(view(v, i:j)), zip([1; cumcounts[1:end-1] .+ 1], cumcounts)) |> CUDA.CuArray
     v = reshape(v,1,:)
   else
-    #v = [tanh(sum(view(v, i:j))) for (i, j) in zip([1; cumcounts[1:end-1] .+ 1], cumcounts)]' |> collect
-    v = [sum(view(v, i:j)) for (i, j) in zip([1; cumcounts[1:end-1] .+ 1], cumcounts)]' |> collect
+    v = [tanh(sum(view(v, i:j))) for (i, j) in zip([1; cumcounts[1:end-1] .+ 1], cumcounts)]' |> collect
+    #v = [sum(view(v, i:j)) for (i, j) in zip([1; cumcounts[1:end-1] .+ 1], cumcounts)]' |> collect
 
   end
   #print("\n graph_indicator used \n")
@@ -212,8 +212,8 @@ function Network.forward(nn::TwoHeadNetwork, state, graph_indicator = nothing, a
     p = permutedims(p_, (2, 1))  # Transpose p
   else
     p = p_' |> collect
-    #v = [tanh(sum(v))]' |> collect
-    v = [sum(v)]' |> collect
+    v = [tanh(sum(v))]' |> collect
+    #v = [sum(v)]' |> collect
   end
 
    

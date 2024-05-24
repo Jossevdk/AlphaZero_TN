@@ -53,12 +53,13 @@ function parse_tuple(s::String)
 end
 
 
-data = read_json_file("25_tensors_3mean.json")
+data = read_json_file("50_tensors_3mean.json")
 
 rewards = []
 times = []
-
-for i in 76:100
+greedy_results = []
+for i in 1:30
+  GC.gc()
   print("\n\n ##########  ", i, "  ########## \n\n")
   start = time()
   str_dict = data[i]["eq_$(i-1)"]
@@ -87,10 +88,10 @@ for i in 76:100
   print(nedges)
 
 
-  include("params/params_N25_S34_Networktest_25_5_competing.jl")
+  include("params/params_N25_S34_Networktest_25_5_score_wins_arena.jl")
 
-  include("environments/tensor_alphazeroRTN_greedy_competing_penalty.jl")
-  experiment = AlphaZero.Experiment("testing2", GameSpec(), params, Network, netparams, benchmark)
+  include("environments/tensor_alphazeroRTN.jl")
+  experiment = AlphaZero.Experiment("testing1_no_average", GameSpec(), params, Network, netparams, benchmark)
 
 
   Ses = Session(experiment)
@@ -99,24 +100,31 @@ for i in 76:100
 
   p = AlphaZeroPlayer(Ses.env, timeout=0.5)
   print(p.niters)
-  #p = NetworkPlayer(AlphaZero.Network.copy(Ses.env.bestnn, on_gpu=false, test_mode=true))
-  for j in 1:1
+  p = NetworkPlayer(AlphaZero.Network.copy(Ses.env.bestnn, on_gpu=false, test_mode=true))
+  for j in 1:5
     global trace = play_game(gspec, p; flip_probability=0.0, id=1, worker_id=1, reset_every=nothing)
     print(last(trace.states).greedy_result, "\n")
-    print(last(trace.states).history, last(trace.states).total_reward * last(trace.states).greedy_result, "\n")
+    print(last(trace.states).history, last(trace.states).total_reward)# * last(trace.states).greedy_result, "\n")
     if j == 1
-      global best = last(trace.states).total_reward * last(trace.states).greedy_result
+      global best = last(trace.states).total_reward# * last(trace.states).greedy_result
     else
-      global best = max(best, last(trace.states).total_reward * last(trace.states).greedy_result)
+      global best = max(best, last(trace.states).total_reward)# * last(trace.states).greedy_result)
     end
   end
   print(best, "\n")
   push!(rewards, best)
+  push!(greedy_results, last(trace.states).greedy_result)
   push!(times, time() - start)
+  GC.gc()
+  
 end
 print(rewards, "\n")
+print(greedy_results)
 print(times, "\n")
 print(mean(rewards))
+
+
+
 
 #trace = play_game(gspec, p; flip_probability=0.)
 

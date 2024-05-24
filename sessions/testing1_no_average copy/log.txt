@@ -1,0 +1,115 @@
+
+Initializing a new AlphaZero environment
+
+  Initial report
+  
+    Number of network parameters: 18,052
+    Number of regularized network parameters: 50
+    Memory footprint per MCTS node: 9952 bytes
+  
+  Running benchmark: Network Only
+  
+    Average reward: -6014539.25, redundancy: 9.3%
+
+Starting iteration 1
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.1
+    MCTS memory footprint per worker: 205.84MB
+    Experience buffer size: 3,928 (3,690 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         3.2378957e12     3.2596608e12       0.29677072     0.0003597789     1.2936089e-9        2.7864966        3.1344142
+         3.2378483e12      3.259613e12       0.24972673    0.00052988884     2.6280615e-9        2.7864966        3.0307167
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.56 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         3.2378483e12      3.259613e12       0.24972673    0.00052988884     2.6280615e-9        2.7864966        3.0307167
+           3.23783e12      3.259594e12       0.20716581    0.00076784944   -4.5206466e-10        2.7864966        2.9978547
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.47, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           3.23783e12      3.259594e12       0.20716581    0.00076784944   -4.5206466e-10        2.7864966        2.9978547
+         3.2378134e12      3.259578e12       0.22165903      0.001082228    3.3597117e-10        2.7864966         3.011535
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.56 (network replaced), redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -1338009.78, redundancy: 6.3%
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Starting iteration 2
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.1
+    MCTS memory footprint per worker: 215.48MB
+    Experience buffer size: 6,000 (5,658 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+          9.386887e12      9.407377e12       0.22357471     0.0010822281    4.4256632e-10        2.7411346        2.9935453
+          9.386835e12      9.407326e12       0.21912894     0.0016116033    -6.700542e-10        2.7411346          3.00346
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.56 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+          9.386835e12      9.407326e12       0.21912894     0.0016116033    -6.700542e-10        2.7411346          3.00346
+           9.38672e12      9.407208e12       0.26186922     0.0022246588   -7.5790757e-10        2.7411346        3.0002365
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.66 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           9.38672e12      9.407208e12       0.26186922     0.0022246588   -7.5790757e-10        2.7411346        3.0002365
+           9.38666e12      9.407151e12       0.29503155     0.0029074822    1.3153897e-10        2.7411346        3.0685594
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.47, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -1695712.34, redundancy: 7.3%
+
+Training completed
+

@@ -1,0 +1,840 @@
+
+Initializing a new AlphaZero environment
+
+  Initial report
+  
+    Number of network parameters: 18,052
+    Number of regularized network parameters: 50
+    Memory footprint per MCTS node: 9952 bytes
+  
+  Running benchmark: Network Only
+  
+    Average reward: -6014539.25, redundancy: 9.3%
+
+Starting iteration 1
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.1
+    MCTS memory footprint per worker: 205.84MB
+    Experience buffer size: 3,928 (3,690 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         3.2378957e12     3.2596608e12       0.29677072     0.0003597789     1.2936089e-9        2.7864966        3.1344142
+         3.2378483e12      3.259613e12       0.24972673    0.00052988884     2.6280615e-9        2.7864966        3.0307167
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.56 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         3.2378483e12      3.259613e12       0.24972673    0.00052988884     2.6280615e-9        2.7864966        3.0307167
+           3.23783e12      3.259594e12       0.20716581    0.00076784944   -4.5206466e-10        2.7864966        2.9978547
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.47, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           3.23783e12      3.259594e12       0.20716581    0.00076784944   -4.5206466e-10        2.7864966        2.9978547
+         3.2378134e12      3.259578e12       0.22165903      0.001082228    3.3597117e-10        2.7864966         3.011535
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.56 (network replaced), redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -1338009.78, redundancy: 6.3%
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Starting iteration 2
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.1
+    MCTS memory footprint per worker: 215.48MB
+    Experience buffer size: 6,000 (5,658 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+          9.386887e12      9.407377e12       0.22357471     0.0010822281    4.4256632e-10        2.7411346        2.9935453
+          9.386835e12      9.407326e12       0.21912894     0.0016116033    -6.700542e-10        2.7411346          3.00346
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.56 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+          9.386835e12      9.407326e12       0.21912894     0.0016116033    -6.700542e-10        2.7411346          3.00346
+           9.38672e12      9.407208e12       0.26186922     0.0022246588   -7.5790757e-10        2.7411346        3.0002365
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.66 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           9.38672e12      9.407208e12       0.26186922     0.0022246588   -7.5790757e-10        2.7411346        3.0002365
+           9.38666e12      9.407151e12       0.29503155     0.0029074822    1.3153897e-10        2.7411346        3.0685594
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.47, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -1695712.34, redundancy: 7.3%
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Starting iteration 3
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.2
+    MCTS memory footprint per worker: 216.63MB
+    Experience buffer size: 6,000 (5,674 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+          9.572768e12      9.562268e12       0.29340065     0.0029074817  -1.11690567e-10        2.7143006        3.0524096
+          9.572685e12      9.562185e12         0.296925     0.0037746653   -7.3380946e-10        2.7143006        3.0168602
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.59 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+          9.572685e12      9.562185e12         0.296925     0.0037746653   -7.3380946e-10        2.7143006        3.0168602
+          9.572614e12      9.562113e12       0.29757467     0.0047701155    -1.5106747e-9        2.7143006        3.0284843
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.66 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+          9.572614e12      9.562113e12       0.29757467     0.0047701155    -1.5106747e-9        2.7143006        3.0284843
+           9.57255e12       9.56205e12        0.2962249      0.005871075     9.063716e-10        2.7143006        3.0343952
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.38, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -18822481.33, redundancy: 7.2%
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Starting iteration 4
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.2
+    MCTS memory footprint per worker: 209.96MB
+    Experience buffer size: 6,000 (5,650 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+          6.443928e13      6.456432e13        0.2776908     0.0058710733   1.10579504e-10        2.7391953        3.0460873
+         6.4439148e13     6.4564197e13        0.2734146     0.0068809134     1.9205433e-9        2.7391953        3.0252914
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.66 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         6.4439148e13     6.4564197e13        0.2734146     0.0068809134     1.9205433e-9        2.7391953        3.0252914
+         6.4439462e13       6.45645e13        0.2543128     0.0078004096    -4.125805e-10        2.7391953        2.9956143
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.47, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         6.4439462e13       6.45645e13        0.2543128     0.0078004096    -4.125805e-10        2.7391953        2.9956143
+         6.4439122e13      6.456418e13         0.303075      0.009054166     6.262954e-10        2.7391953        2.9927897
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.59, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -10941798.79, redundancy: 8.9%
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Starting iteration 5
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.2
+    MCTS memory footprint per worker: 208.16MB
+    Experience buffer size: 6,334 (5,958 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+          2.146935e13      2.153671e13        0.2937696      0.009054166    3.3990827e-10        2.7408867        2.9997072
+         2.1469313e13      2.153668e13        0.2794447      0.010371884    -1.0314227e-9        2.7408867         2.990127
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.69 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         2.1469313e13      2.153668e13        0.2794447      0.010371884    -1.0314227e-9        2.7408867         2.990127
+          2.146926e13     2.1536627e13        0.2757829      0.011603584    -1.2789642e-9        2.7408867         3.025444
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.53, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+          2.146926e13     2.1536627e13        0.2757829      0.011603584    -1.2789642e-9        2.7408867         3.025444
+          2.146913e13     2.1536501e13        0.2682152      0.013038445     1.4522649e-9        2.7408867        2.9744139
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.44, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -5799082.68, redundancy: 6.8%
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Starting iteration 6
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.2
+    MCTS memory footprint per worker: 210.97MB
+    Experience buffer size: 6,667 (6,267 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         1.2229881e13      1.199835e13       0.27286428      0.013038454     -5.12432e-10         2.722607        2.9714973
+         1.2229891e13     1.1998359e13       0.28493458      0.014738999    -1.7415979e-9         2.722607        3.0078695
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.59 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         1.2229891e13     1.1998359e13       0.28493458      0.014738999    -1.7415979e-9         2.722607        3.0078695
+         1.2229746e13     1.1998218e13       0.28597814      0.016483827    -1.1556139e-9         2.722607        2.9801545
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.72 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         1.2229746e13     1.1998218e13       0.28597814      0.016483827    -1.1556139e-9         2.722607        2.9801545
+         1.2229626e13     1.1998099e13        0.2928339      0.018387014   -7.0010275e-10         2.722607        2.9971564
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.41, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -1015662.41, redundancy: 7.3%
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Starting iteration 7
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.2
+    MCTS memory footprint per worker: 211.27MB
+    Experience buffer size: 7,000 (6,608 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         1.5815564e13     1.5931474e13       0.27583605      0.018387012    1.4266828e-10        2.7101846        2.9871068
+         1.5815472e13     1.5931382e13        0.2656884      0.020508198    2.7169275e-10        2.7101846        2.9739807
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.53, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         1.5815472e13     1.5931382e13        0.2656884      0.020508198    2.7169275e-10        2.7101846        2.9739807
+         1.5815429e13     1.5931341e13       0.25828972       0.02271488    5.2911403e-10        2.7101846        2.9692001
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.66 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         1.5815429e13     1.5931341e13       0.25828972       0.02271488    5.2911403e-10        2.7101846        2.9692001
+         1.5815244e13     1.5931154e13        0.2557856      0.025013866    -2.0566175e-9        2.7101846         2.971631
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.59, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -3455694.49, redundancy: 7.2%
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Starting iteration 8
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.2
+    MCTS memory footprint per worker: 213.08MB
+    Experience buffer size: 7,000 (6,613 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+          5.390935e14     5.3568064e14       0.25303635      0.025013864    -3.834709e-10        2.6998215         2.971159
+          5.390937e14     5.3568084e14       0.31009275      0.026180116    -1.2228952e-9        2.6998215         2.990943
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.62 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+          5.390937e14     5.3568084e14       0.31009275      0.026180116    -1.2228952e-9        2.6998215         2.990943
+          5.390928e14      5.356799e14        0.2395304      0.027210373   -5.3608373e-10        2.6998215        2.9321432
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.59, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+          5.390928e14      5.356799e14        0.2395304      0.027210373   -5.3608373e-10        2.6998215        2.9321432
+         5.3909352e14     5.3568074e14       0.29684755       0.02843072    8.9966257e-10        2.6998215        2.9861898
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.50, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -4519333.32, redundancy: 9.9%
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Starting iteration 9
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.3
+    MCTS memory footprint per worker: 217.58MB
+    Experience buffer size: 7,000 (6,620 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         2.2189142e12     2.2144441e12        0.3042688      0.028430719     1.0680374e-9        2.6251364        2.9456615
+         2.2188442e12     2.2143752e12       0.29985467      0.031520236    -8.235373e-10        2.6251364         2.884418
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.72 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         2.2188442e12     2.2143752e12       0.29985467      0.031520236    -8.235373e-10        2.6251364         2.884418
+         2.2188117e12      2.214342e12        0.3195596      0.034689434     5.390865e-10        2.6251364        2.9227388
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.44, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         2.2188117e12      2.214342e12        0.3195596      0.034689434     5.390865e-10        2.6251364        2.9227388
+         2.2187653e12     2.2142958e12       0.33337164      0.037945874     1.0515597e-9        2.6251364        2.9534783
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.38, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -3733720.94, redundancy: 8.0%
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+Starting iteration 10
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.2
+    MCTS memory footprint per worker: 208.89MB
+    Experience buffer size: 7,000 (6,623 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+          1.403248e14     1.3860765e14       0.31846955      0.037945874    -1.3615238e-9          2.63841        2.9665117
+         1.4032378e14     1.3860661e14       0.37455836      0.039447594    5.2021276e-10          2.63841         3.020787
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.38, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         1.4032378e14     1.3860661e14       0.37455836      0.039447594    5.2021276e-10          2.63841         3.020787
+         1.4032333e14     1.3860617e14       0.39931893      0.040840015     -3.01865e-10          2.63841         3.039204
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.31, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+         1.4032333e14     1.3860617e14       0.39931893      0.040840015     -3.01865e-10          2.63841         3.039204
+        1.40324584e14      1.386074e14       0.41030762      0.042196296    -2.3869746e-9          2.63841        3.0370388
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.28, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -3165109.10, redundancy: 7.2%
+
+Training completed
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+
+
+Loading environment from: sessions/testing1_no_average
+

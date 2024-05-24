@@ -1,0 +1,500 @@
+
+Loading environment from: sessions/testing2_first_greedy
+
+Starting iteration 1
+
+  Starting self-play
+  
+    Generating 2 samples per second on average
+    Average exploration depth: 1.9
+    MCTS memory footprint per worker: 217.01MB
+    Experience buffer size: 1,809 (1,532 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.13058648       0.09853988      0.030897692    0.00038764646   -2.3357313e-10        3.3028688        3.3314955
+             0.135339       0.10277406      0.031464208     0.0003663624     1.1105917e-9        3.3028688         3.331108
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.00, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+             0.135339       0.10277406      0.031464208     0.0003663624     1.1105917e-9        3.3028688         3.331108
+           0.12228369      0.090058014      0.031137912    0.00033235544     2.8473655e-9        3.3028688        3.3341243
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.12 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.12228369      0.090058014      0.031137912    0.00033235544     2.8473655e-9        3.3028688        3.3341243
+            0.1211945       0.08923584       0.03083026    0.00032196796       1.85831e-9        3.3028688        3.3332102
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -1.00, redundancy: 12.7%
+
+Training completed
+
+
+Loading environment from: sessions/testing2_first_greedy
+
+Starting iteration 2
+
+  Starting self-play
+  
+    Generating 2 samples per second on average
+    Average exploration depth: 1.9
+    MCTS memory footprint per worker: 255.91MB
+    Experience buffer size: 3,765 (3,220 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.19330136       0.15567678       0.03692675    0.00032196793    -2.0237492e-9        3.2768886        3.3117816
+           0.17677328       0.13904114       0.03694609     0.0003047167    -6.834901e-10        3.2768886        3.3144183
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.38 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.17677328       0.13904114       0.03694609     0.0003047167    -6.834901e-10        3.2768886        3.3144183
+           0.16980055        0.1321497      0.036793035    0.00029430972    -1.6897572e-9        3.2768886        3.3136878
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.50 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.16980055        0.1321497      0.036793035    0.00029430972    -1.6897572e-9        3.2768886        3.3136878
+            0.1694878       0.13207564       0.03657656    0.00028621816     1.6724309e-9        3.2768886        3.3133073
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.69, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -1.00, redundancy: 12.7%
+
+Training completed
+
+
+Loading environment from: sessions/testing2_first_greedy
+
+Starting iteration 3
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.1
+    MCTS memory footprint per worker: 347.10MB
+    Experience buffer size: 6,000 (5,237 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.48415926       0.35075653       0.13165817    0.00028621822     -9.52605e-10        3.0898957        3.2178261
+            0.4625522        0.3314286       0.12948294     0.0002666695     8.288319e-10        3.0898957          3.21811
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.12, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            0.4625522        0.3314286       0.12948294     0.0002666695     8.288319e-10        3.0898957          3.21811
+           0.46119934       0.33199298       0.12754521    0.00025176624     2.629088e-10        3.0898957           3.2161
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.00, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.46119934       0.33199298       0.12754521    0.00025176624     2.629088e-10        3.0898957           3.2161
+           0.45786893        0.3298376       0.12638646    0.00024051312    2.2254253e-10        3.0898957        3.2166405
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.19 (network replaced), redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -1.00, redundancy: 11.5%
+
+Training completed
+
+
+Loading environment from: sessions/testing2_first_greedy
+
+Starting iteration 4
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.2
+    MCTS memory footprint per worker: 364.54MB
+    Experience buffer size: 6,000 (5,377 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+             0.800088        0.5397518        0.2578199    0.00024051314    5.8544714e-10        2.8125951         3.088644
+             0.756956        0.5299495       0.22478497    0.00023949184    -9.966088e-10        2.8125951        3.0417917
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.62, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+             0.756956        0.5299495       0.22478497    0.00023949184    -9.966088e-10        2.8125951        3.0417917
+           0.75441784       0.52960545       0.22257599    0.00023195322       6.2289e-10        2.8125951        3.0450616
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.25, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.75441784       0.52960545       0.22257599    0.00023195322       6.2289e-10        2.8125951        3.0450616
+           0.75773764       0.53395313       0.22158726    0.00022856616    3.3326136e-10        2.8125951        3.0400243
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.56, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -1.00, redundancy: 10.5%
+
+Training completed
+
+
+Loading environment from: sessions/testing2_first_greedy
+
+Starting iteration 5
+
+  Starting self-play
+  
+    Generating 2 samples per second on average
+    Average exploration depth: 2.2
+    MCTS memory footprint per worker: 444.12MB
+    Experience buffer size: 6,334 (5,700 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            0.7038873       0.48476902       0.21690041    0.00022856618   -1.8816061e-10        2.7933366        3.0321112
+            0.6835759        0.4702939       0.21108809    0.00023148162      2.363301e-9        2.7933366        2.9897442
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.25 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            0.6835759        0.4702939       0.21108809    0.00023148162      2.363301e-9        2.7933366        2.9897442
+           0.68282974        0.4689248       0.21165176    0.00022828991     1.2343121e-9        2.7933366        2.9887524
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.62, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.68282974        0.4689248       0.21165176    0.00022828991     1.2343121e-9        2.7933366        2.9887524
+           0.67690814       0.46599898       0.20852894    0.00021904963    7.2962536e-10        2.7933366        3.0069046
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.19, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -1.00, redundancy: 8.3%
+
+Training completed
+
+
+Loading environment from: sessions/testing2_first_greedy
+
+Starting iteration 6
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.3
+    MCTS memory footprint per worker: 417.78MB
+    Experience buffer size: 6,667 (6,093 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.75607103        0.5685267       0.18596354    0.00021904957    5.5485266e-10         2.733351         2.972332
+            0.7370242        0.5609699       0.17461355    0.00021760997     1.1794691e-9         2.733351        2.9227488
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.50, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            0.7370242        0.5609699       0.17461355    0.00021760997     1.1794691e-9         2.733351        2.9227488
+            0.7315521       0.55570954       0.17441216    0.00020856287    5.8997065e-12         2.733351        2.9251602
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.31, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            0.7315521       0.55570954       0.17441216    0.00020856287    5.8997065e-12         2.733351        2.9251602
+            0.7287144        0.5536524       0.17361945    0.00020394158    1.1865317e-10         2.733351        2.9203923
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.31, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -0.95, redundancy: 7.2%
+
+Training completed
+
+
+Loading environment from: sessions/testing2_first_greedy
+
+Starting iteration 7
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.2
+    MCTS memory footprint per worker: 408.13MB
+    Experience buffer size: 7,000 (6,454 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            0.7523334        0.5947127       0.15569903    0.00020394163      9.18329e-10        2.6991088         2.904671
+           0.73801535        0.5862386       0.14975087    0.00020106911     4.460077e-10        2.6991088        2.8533392
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.25, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.73801535        0.5862386       0.14975087    0.00020106911     4.460077e-10        2.6991088        2.8533392
+            0.7391714        0.5872748          0.14982    0.00019592176    -4.360578e-10        2.6991088        2.8523848
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.62, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            0.7391714        0.5872748          0.14982    0.00019592176    -4.360578e-10        2.6991088        2.8523848
+            0.7368583        0.5853993       0.14940733    0.00018984047     -1.068845e-9        2.6991088        2.8518574
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.38, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -0.90, redundancy: 7.2%
+
+Training completed
+
+
+Loading environment from: sessions/testing2_first_greedy
+
+Starting iteration 8
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.2
+    MCTS memory footprint per worker: 420.78MB
+    Experience buffer size: 7,000 (6,497 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.81182444        0.6613171       0.14957687    0.00018984046   -4.3554416e-10         2.682684        2.8379583
+            0.7981793       0.64269626       0.15439703    0.00018582343     1.0333427e-9         2.682684        2.8134682
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.38, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            0.7981793       0.64269626       0.15439703    0.00018582343     1.0333427e-9         2.682684        2.8134682
+            0.7988029        0.6453263       0.15248114    0.00018258639   -1.9783144e-11         2.682684        2.8082795
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.06, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            0.7988029        0.6453263       0.15248114    0.00018258639   -1.9783144e-11         2.682684        2.8082795
+            0.7913787        0.6372839       0.15309343    0.00017599354   -1.4669359e-10         2.682684        2.8037913
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.31, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -1.00, redundancy: 10.1%
+
+Training completed
+
+
+Loading environment from: sessions/testing2_first_greedy
+
+Starting iteration 9
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.2
+    MCTS memory footprint per worker: 383.15MB
+    Experience buffer size: 7,000 (6,495 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.77103984        0.6237268       0.14586055    0.00017599353    -9.483422e-10         2.697011        2.8107486
+            0.7576804        0.6132502       0.14310369    0.00017151567    -1.4234065e-9         2.697011        2.8278513
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.12 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            0.7576804        0.6132502       0.14310369    0.00017151567    -1.4234065e-9         2.697011        2.8278513
+           0.74885756       0.60373634       0.14385329     0.0001680698    -5.360642e-10         2.697011        2.8270857
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.38 (network replaced), redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.74885756       0.60373634       0.14385329     0.0001680698    -5.360642e-10         2.697011        2.8270857
+           0.74143994        0.5970951       0.14303917     0.0001654309    -8.642382e-10         2.697011        2.8292525
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: +0.06, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -0.85, redundancy: 6.8%
+
+Training completed
+
+
+Loading environment from: sessions/testing2_first_greedy
+
+Starting iteration 10
+
+  Starting self-play
+  
+    Generating 3 samples per second on average
+    Average exploration depth: 2.4
+    MCTS memory footprint per worker: 406.82MB
+    Experience buffer size: 7,000 (6,525 distinct boards)
+  
+  Starting learning
+  
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            0.8916053          0.71518       0.17467245    0.00016543089   -3.2489406e-10        2.5613375         2.784224
+            0.8781579         0.705055        0.1715923    0.00017497841   -1.8952528e-10        2.5613375         2.743482
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.06, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+            0.8781579         0.705055        0.1715923    0.00017497841   -1.8952528e-10        2.5613375         2.743482
+           0.85442054       0.68639976       0.16647771    0.00016690123    3.7014944e-10        2.5613375        2.7281153
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -0.88, redundancy: 0.0%
+    
+    Optimizing the loss
+    
+                 Loss               Lv               Lp             Lreg             Linv               Hp            Hpnet
+           0.85442054       0.68639976       0.16647771    0.00016690123    3.7014944e-10        2.5613375        2.7281153
+            0.8782026       0.71004623       0.16642049    0.00016401029    2.7484496e-11        2.5613375        2.7158613
+    
+    Launching a checkpoint evaluation
+    
+      Average reward: -1.00, redundancy: 0.0%
+  
+  Running benchmark: Network Only
+  
+    Average reward: -0.90, redundancy: 7.0%
+
+Training completed
+

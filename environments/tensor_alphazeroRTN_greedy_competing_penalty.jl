@@ -515,9 +515,10 @@ function GI.play!(env::GameEnv, action; worker_id=1, playing=false)
           print("nothing \n \n")
         end  
       end
-      if env.total_reward > tenv.best_result[worker_id]
+      if env.total_reward > -1#tenv.best_result[worker_id]
         if playing
           print(playing, "finished  better!", worker_id, "\n\n")
+          print(total_reward, "\n\n")
         end
         tenv.best_result[worker_id] = env.total_reward
         env.reward = 1
@@ -533,7 +534,7 @@ function GI.play!(env::GameEnv, action; worker_id=1, playing=false)
   lock(lock_) do
     if env_params.use_feas_act && env.finished == false
       if !isnothing(tenv.best_result[worker_id])
-        if env.total_reward - minimum(attr[2, :]) / env.greedy_result < tenv.best_result[worker_id]
+        if env.total_reward - minimum(attr[2, :]) / env.greedy_result < -1#tenv.best_result[worker_id]
           if playing
             print("Prematurely finished \n")
             print("total_reward: ", env.total_reward- minimum(attr[2, :])/env.greedy_result, "\n")

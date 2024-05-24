@@ -194,7 +194,7 @@ function uct_scores(info::StateInfo, cpuct, ϵ, η)
     Q = a.W / max(a.N, 1)
     P = iszero(ϵ) ? a.P : (1 - ϵ) * a.P + ϵ * η[i]
     #Q +  cpuct * P * sqrtNtot / (a.N + 1)
-    Q + cpuct * mean_Q * P * sqrtNtot / (a.N + 1) #use node average value
+    Q + cpuct  * P * sqrtNtot / (a.N + 1) #use node average value
 
   end
 end

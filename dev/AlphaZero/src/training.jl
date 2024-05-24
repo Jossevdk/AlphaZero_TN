@@ -167,8 +167,9 @@ function compare_networks(gspec, contender, baseline, params, handler)
     (rewards_c, red_c), tc = @timed evaluate_network(gspec, contender, params, handler, network_name="contender")
     (rewards_b, red_b), tb = @timed evaluate_network(gspec, baseline, params, handler, network_name="baseline")
     avgr = mean(rewards_c) - mean(rewards_b)
-    avgr = mean(rewards_c.>rewards_b)
-    print(mean(rewards_b.>rewards_c))
+    
+    # avgr = mean(rewards_c.>rewards_b)
+    # print(mean(rewards_b.>rewards_c))
     red = mean([red_c, red_b])
     t = tc + tb
   end

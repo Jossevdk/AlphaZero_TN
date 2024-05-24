@@ -9,18 +9,18 @@ print(nworkers())
 # @everywhere Pkg.activate(".")
 @everywhere using Revise
 @everywhere using AlphaZero
-
+       
 
 
 @everywhere global iteration = 1
 @everywhere global EVALMODE = false
-for it in 1:5
+for it in 11:20
     GC.gc()
     global iteration = it
-    @everywhere include("params/params_N25_S34_Networktest_25_5_score_wins_arena.jl")
-    @everywhere include("environments/tensor_alphazeroRTN.jl")
+    @everywhere include("params/params_N25_S34_Networktest_25_5_competing.jl")
+    @everywhere include("environments/tensor_alphazeroRTN_greedy_competing_penalty.jl")
 
-    experiment = AlphaZero.Experiment("testing1_no_average", GameSpec(), params, Network, netparams, benchmark)
+    experiment = AlphaZero.Experiment("testing2_first_greedy", GameSpec(), params, Network, netparams, benchmark)
 
 
 

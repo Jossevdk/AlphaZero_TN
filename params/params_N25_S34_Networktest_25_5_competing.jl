@@ -10,7 +10,7 @@ Network = NetLib.GraphNet
 #   use_batch_norm=false,
 #   batch_norm_momentum=1.)
 
-env_params = EnvParams(N = 25, S = nedges, use_baseline = true, eval_mode=EVALMODE, use_robust = true, use_feas_act=true, n_best_result = 40)
+env_params = EnvParams(N = 25, S = 34, use_baseline = true, eval_mode=EVALMODE, use_robust = true, use_feas_act=true, n_best_result = 40)
 
 
 netparams = NetLib.GraphNetHP(
@@ -57,9 +57,9 @@ netparams = NetLib.GraphNetHP(
     use_gpu=false,
     use_position_averaging=true,
     samples_weighing_policy=LOG_WEIGHT,
-    batch_size=32,
-    loss_computation_batch_size=32,
-    optimiser=Adam(lr=2e-3),
+    batch_size=64,
+    loss_computation_batch_size=64,
+    optimiser=Adam(lr=5e-2),
     l2_regularization=1e-4,
     nonvalidity_penalty=1.,
     min_checkpoints_per_epoch=1,
@@ -71,13 +71,13 @@ netparams = NetLib.GraphNetHP(
     arena=arena,
     self_play=self_play,
     learning=learning,
-    num_iters=21,
+    num_iters=iteration,
     ternary_outcome=false,
     use_symmetries=false,
     memory_analysis=nothing,
     mem_buffer_size=PLSchedule(
-    [      0,        3, 6],
-    [6_000, 6_000, 10_000]))
+      [      0,        3, 6],
+      [6_000, 6_000, 7_000]))
   
   #####
   ##### Evaluation benchmark
